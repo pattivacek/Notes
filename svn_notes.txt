@@ -1,0 +1,11 @@
+svn propedit -r N --revprop svn:log URL 
+svn propset svn:keywords "Id Rev" YourFile
+svn propset svn:eol-style native YourFile
+
+When a repo branch is renamed, rename it locally and then run this in the directory:
+svn switch file:///svn/SVN-software/branches/NEW_NAME
+
+Access a remote server with a specific port:
+Edit the SVN config file (~/.subversion/config). Add this to the [tunnels] section:
+foo = ssh -p 20000
+Then access the repo via the URL svn+foo://servername/path

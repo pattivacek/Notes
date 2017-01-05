@@ -1,0 +1,47 @@
+http://en.wikibooks.org/wiki/LaTeX
+
+% Add line break with \\. To control additional space, for example:
+\\[10pt]
+
+% To control spacing after a command, it is recommended not to put a space at the end of
+% the command itself, but instead always close a no-argument command with {}
+% anyway. Use '\ ' to add a space if necessary. For example:
+\newcommand{\libdde}{\texttt{libdde}}
+The implementation is known as \libdde{}.
+% http://tex.stackexchange.com/questions/31091/space-after-latex-commands
+
+% Explicit space; prevent line break between words:
+~
+
+% Prevent extra space (full stop) after a period, use '\ '. Also note that a
+% comma after the period prevents the spacing issue, although parentheses do
+% not. If the character before the period is a capital letter, it is assumed to
+% be an initial and the logic is circumvented. To force the extra space, use
+% '\@.'. Note that question marks and exclamation points are treated the same
+% as periods.
+% http://en.wikibooks.org/wiki/LaTeX/Tips_and_Tricks#id_est_and_exempli_gratia_.28i.e._and_e.g..29
+% Examples:
+I said hello to Ms.\ Smith.
+I think I read this in eighth grade, i.e.\ 2000 or 2001.
+We rode on the MTA\@.
+There are many types of books (fiction, memoir, etc\@.) that could be listed.
+
+% Comment out a block:
+\usepackage{verbatim}
+\begin{comment}
+\end{comment}
+
+% Inline math:
+\(...\)     % Plain TeX (not recommended in LaTeX) is $...$
+% Displayed math (separate from main text):
+\[...\]     % Plain TeX (not recommended in LaTeX) is $$...$$
+
+% Ellipses: do not use '...', this will be too tightly spaced. Use \ldots,
+% which may require forced spaces before or after ('\ ').
+
+% Hyphens and dashes:
+Use - for hypenated words (daughter-in-law).
+Use -- for en-dashes, used in ranges (pages 5--7).
+Use --- for em-dashes, used as punctuation between phrases ("A specter is haunting Europe---the specter of Communism.")
+Use math mode or $-5$ for a minus sign.
+

@@ -1,0 +1,78 @@
+Matlab won't restart:
+stop all java processes
+If that doesn't work, open matlab on the command prompt with '-nojvm' and try this:
+clear all;
+rehash;
+rehash toolboxreset;
+
+
+Matlab won't release lock on mex file:
+clear mex
+Or try any of the following:
+clear <mex_file_name>
+MUNLOCK
+mexUnlock
+
+
+Comment block:
+%{ ... %}
+
+
+Switch to command window:
+ctrl-0
+Switch to editor:
+ctrl-shift-0
+
+
+Generally prefer numel() to length(). numel is number of elements, length is length of greatest dimension.
+numel(A) == prod(size(A))
+length(A) == max(size(A))
+
+
+Preallocating with A(1000,1000) = 0 is generally faster than A = zeros(1000,1000). This is somewhat counterintuitive, but apparently the former is akin to calloc and the later to malloc + memset.
+For cell arrays, initializing with the cell() function is preferred.
+For non-double data, A = zeros(1000,1000,'int8') is faster than A = int8(zeros(1000,1000)), but A(1000,1000) = int8(0) is still even faster.
+Note that this is true for Windows but might not be for Linux or Mac
+
+
+Display last warning identifier:
+w = warning('query','last')
+
+
+List all environment variables in Matlab:
+http://stackoverflow.com/questions/20004955/list-all-environment-variables-in-matlab
+
+% returned as a Java map
+map = java.lang.System.getenv();
+
+% build MATLAB map
+% (Windows env. vars. are case-insensitive)
+m = containers.Map(...
+    upper(cell(map.keySet.toArray)), ...   % keys
+    cell(map.values.toArray));             % values
+
+% access variables by name
+disp(m('OS'))
+
+% print all environment variables
+keys = m.keys;
+for i=1:numel(keys)
+    fprintf('%s=%s\n', keys{i}, m(keys{i}));
+end
+
+% Get command history:
+% http://www.mathworks.com/matlabcentral/answers/239151-any-way-to-get-2015a-working-with-two-environments
+historypath = com.mathworks.mlservices.MLCommandHistoryServices.getSessionHistory;
+% No known way to load or set the history, though.
+
+% Get list of open files:
+docArray = matlab.desktop.editor.getAll;
+fNames = cell(1,length(docArray));
+for fIdx = 1:length(docArray)
+    fNames{fIdx} = docArray(fIdx).Filename;
+end
+
+% Open a list of files:
+for fIdx = 1:length(fNames)
+    matlab.desktop.editor.openDocument(fNames{fIdx});
+end

@@ -1,0 +1,4 @@
+Ctrl-F to find.
+F3 to find next.
+Shift-F3 to find previous.
+Ctrl-F3 to find selected.

@@ -1,0 +1,11 @@
+Allocatable character array:
+
+  subroutine hello (n,string)
+    character(:),allocatable,intent(out)::string
+    integer,intent(in)::n
+    character(10)::helloworld="hello world"
+!    string=helloworld(:n)                      ! Does not work.
+!    string=(helloworld(:n))                    ! Works.
+!    allocate(string, source=helloworld(:n))    ! Does not work.
+     allocate(string, source=(helloworld(:n)))  ! Works.
+  end subroutine hello

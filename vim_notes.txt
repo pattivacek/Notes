@@ -1,0 +1,358 @@
+Ctrl-w s for horizontal splitting
+Ctrl-w v for vertical splitting
+Ctrl-w q to close window
+Ctrl-w w to switch windows
+
+1. Vim Line Navigation
+    * k -- navigate upwards
+    * j -- navigate downwards
+    * l -- navigate right side
+    * h -- navigate left side
+
+    * 0 -- go to the starting of the current line.
+    * ^ -- go to the first non blank character of the line.
+    * $ -- go to the end of the current line.
+    * g_ -- go to the last non blank character of the line.
+
+2. Vim Screen Navigation
+    * H -- Go to the first line of current screen.
+    * M -- Go to the middle line of current screen.
+    * L -- Go to the last line of current screen.
+    * ctrl+f -- Jump forward one full screen.
+    * ctrl+b -- Jump backwards one full screen
+    * ctrl+d -- Jump forward (down) a half screen
+    * ctrl+u -- Jump back (up) one half screen
+
+3. Vim Special Navigation
+    * N% -- Go to the Nth percentage line of the file.
+    * NG -- Go to the Nth line of the file.
+    * G -- Go to the end of the file.
+    * `" -- Go to the position where you were in NORMAL MODE while last closing the file.
+    * `^ -- Go to the position where you were in INSERT MODE while last closing the file.
+    * g -- Go to the beginning of the file.
+
+4. Vim Word Navigation
+    * e -- go to the end of the current word.
+    * E -- go to the end of the current WORD.
+    * b -- go to the previous (before) word.
+    * B -- go to the previous (before) WORD.
+    * w -- go to the next word.
+    * W -- go to the next WORD.
+WORD -- WORD consists of a sequence of non-blank characters, separated with white space.
+word -- word consists of a sequence of letters, digits and underscores.
+
+5. Vim Paragraph Navigation
+    * { -- Go to the beginning of the current paragraph. By pressing { again and again move to the previous paragraph beginnings.
+    * } -- Go to the end of the current paragraph. By pressing } again and again move to the next paragraph end, and again.
+
+6. Vim Search Navigation
+    * /i -- Search for a pattern which will you take you to the next occurrence of it.
+    * ?i -- Search for a pattern which will you take you to the previous occurrence of it.
+    * * - Go to the next occurrence of the current word under the cursor.
+    * # - Go to the previous occurrence of the current word under the cursor.
+
+7. Vim Code Navigation
+    * % -- Go to the matching braces, or parenthesis inside code.
+
+To reselect what you just had selected use 'gv'
+To redo the very last operation just hit "."
+To go a page forward, or a page back use control-f and control-b.
+To go a paragraph forward, or a paragraph back, use { and } (in normal mode of course)
+To go a sentence forward, or a sentence back, use ( and ) (in normal mode of course)
+To go to the next instance of a char you use f-char
+
+
+ge (Backword Word Movement at the end of word Ex. ge,3ge )
+
+Moving to the Start or End of a Line
+$(End Of Line Ex. $,2$)
+^(Start Of Line Ex. ^,3^)
+
+Searching Along a Single Line
+f<Charcter> (Searching Charcter Forward Ex. fa, 2fv)
+F<Charcter> (Searching Charcter Backword Ex. Fg,2Ft)
+t<Charcter> (Search till Forward )
+T<Charcter> (Search till Backword)
+;   repeat last f, F, t, T
+
+Current line information:
+CTRL-G (Where I am in the File)
+g CTRL-G (Count col, line, words and bytes)
+
+Jumping:
+CTRL-O                  Go to [count] Older cursor position in jump list
+                        (not a motion command).
+CTRL-I or <Tab>         Go to [count] newer cursor position in jump list
+                        (not a motion command).
+:ju[mps]                Print the jump list (not a motion command).
+
+Scrolling Up and Down
+z<Enter> (screen line on the top)
+88z<Enter> positions line 88 at the top.
+zt (Leaves the cursor where it is.)
+z- (scrolls line to the end of the screen)
+zb (Leaves the cursor where it is)
+z. (Center of the screen)
+zz (Leaves the cursor where it is .)
+
+Deleting
+x delete character under the cursor (short for "dl")
+X delete character before the cursor (short for "dh")
+dw (Delete Word Ex. dw,3dw,d3w,3d2w,d$,d^,df> )
+dd (Delete Line Ex. dd,3dd)
+D (Delete up to end of line. )(short for "d$")
+diw delete word under the cursor (excluding white space)
+daw delete word under the cursor (including white space)
+dG delete until the end of the file
+dgg delete until the start of the file
+
+Arthemetic
+CTRL-A Increment number (123, 0177, 0x1f,-98)
+CTRL-X Decrement number
+
+Changing Text
+C stands for c$ (change to end of the line)
+s stands for cl (change one character)
+S stands for cc (change a whole line)
+
+Joining Lines
+J (Join Lines to One. Ex J,3J)
+gJ (Join Lines without Spaces)
+
+Replacing Charcter
+r<Charcter> (Replace Charater Under Cursour. Ex. ru,5ra,3r<Enter> )
+R<Charcter>
+
+Changing Case
+~ (Change Case of Character Ex. ~,12~,~fq)
+U (Make the text Uppercase)
+u (Make the text Lowercase)
+g~motion (It does not depend on tildeop)
+g~~ or g~g~ (Changes case of whole line)
+gUmotion (All uppercase)
+gUU (Changes to uppercase for whole line)
+gUw (Changes to uppercase for word)
+guw (Changes to lowercase for word)
+
+>       shift right (indent)
+<       shift left (unindent)
+
+v       When used after an operator, before the motion command: Force
+        the operator to work characterwise, also when the motion is
+        linewise.  If the motion was linewise, it will become
+        |exclusive|.
+        If the motion already was characterwise, toggle
+        inclusive/exclusive.  This can be used to make an exclusive
+        motion inclusive and an inclusive motion exclusive.
+Example:
+    dj
+deletes two lines
+    dvj
+deletes from the cursor position until the character below the cursor
+
+Yank/delete/select inside blocks
+yi' (yank inside single quotes; works for ", (, [, { as well)
+ya' (yank around single quotes)
+yib (yank inside paranthesis block)
+yiB (yank inside curly brace block)
+See also :help text-objects
+
+
+Replace a word with yanked text (type the quotes!): "_cw^R"
+Replace word under cursor with yanked text: :%s/^R^W/^R"/gc
+Replace WORD under cursor with yanked text: :%s/^R^A/^R"/gc
+
+There is mru.vim, which adds the :MRU command.
+
+vim -p <files> opens files in individual tabs.
+:tabnew <file> opens file in a new tab.
+:tabclose         close current tab
+:tabclose {i}     close i-th tab
+:tabonly          close all other tabs (show only the current tab)
+:tab split        copy the current window to a new tab of its own
+:tabs         list all tabs including their displayed windows
+:tabm 0       move current tab to first
+:tabm         move current tab to last
+:tabm {i}     move current tab to position i+1
+:tabn         go to next tab
+:tabp         go to previous tab
+:tabfirst     go to first tab
+:tablast      go to last tab
+gt            go to next tab
+gT            go to previous tab
+{i}gt         go to tab in position i
+:tabdo 		run a command on all of the tabs at once
+Crtl-Alt-PgDown/Up	go to previous/next tab
+
+= aligns code
+
+yank, delete, paste-from-yank:
+Copy into a named register "ayw, do your delete and then paste from the named register "ap.
+Alternatively, you could delete into the black hole register "_d.
+
+Show all registers:
+:reg[isters]
+
+Search-and-replace within visually selected code only:
+:s/\%V<a>/<b>/g
+
+
+Using vim is like talking to your editor in "verb modifier object" sentences, turned into acronyms
+
+    * learn some verbs: v (visual), c (change), d (delete), y (yank/copy). these are the most important. there are others
+    * learn some modifiers: i (inside), a (around), t (till..finds a character), f (find..like till except including the char), / (search..find a string/regex)
+    * learn some text objects: w (word), s (sentence) p (paragraph) b (block/parentheses), t (tag, works for html/xml) there are others
+
+To move efficiently in vim, don't try to do anything by pressing keys many times, instead speak to the editor in sentences
+
+    * delete the current word: diw (delete inside word)
+    * change current sentence: cis (change inside sentence)
+    * change a string inside quotes: ci" (change inside quote)
+    * change until next occurrence of "foo": c/foo (change search foo)
+    * change everything from here to the letter X: ctX
+    * visually select this paragraph: vap (visual around paragraph)
+
+
+If you run :shell or just :sh while you're in the editor, Vim will place you in an interactive shell. You can run whatever commands you want, and resume your Vim session by exiting the shell.
+Vim also allows you to execute a command directly from the editor, without needing to drop to a shell, by using bang (!) followed by the command to be run.:! wc %
+
+Reload .vimrc:
+:source $MYVIMRC
+
+CTRL-W T	Move the current window to a new tab page.
+
+
+Create tags for keyword searching between files:
+ctags -R * at trunk
+ctrl-] to go to object definition/declaration
+ctrl-t to go back up a level
+
+
+You can use Ctrl-C instead of ESC to switch out of insert mode.
+
+select blocks (columns)                  CTRL  + q
+indent selected text                     >
+unindent selected text                   <
+convert selected text to uppercase       U
+convert selected text to lowercase       u
+invert case of selected text             ~
+start recording a macro                  qX (X = key to assign macro to)
+stop recording a macro                   q
+playback macro                           @X (X = key macro was assigned to,
+                                             prefix with with n to repeat n times)
+replay previously played macro *         @@
+bookmark current place in file           mX (X = key to assign bookmark to)
+jump to bookmark                         `X (X = key bookmark was assigned to
+                                             ` = back tick/tilde key)
+show all bookmarks                       :marks
+navigating split screens                 CTRL + w + j = move down a screen
+                                         CRTL + w + k = move up a screen
+                                         CRTL + w + h = move left a screen
+                                         CRTL + w + l = move right a screen
+close all other split screens            :only
+
+gi switches to insertion mode placing the cursor at the same location it was previously.
+If you're editing a line that is wrapped because it's wider than your buffer, you can move up/down using gk and gj.
+
+^wi: Jump to the tag under the cursor by splitting the window.
+cib/ciB: Change the text inside the current set of parenthesis () or braces {}, respectively.
+
+
+:w <filename> saves buffer as <filename> and leaves the old buffer open.
+:sav <filename> saves buffer as <filename> and opens a new buffer with <filename>.
+
+
+Any Vim search pattern can include the special sequence \v (very magic), and this will make every following character except a-zA-Z0-9 and '_' have special meaning. Using \V has the opposite effect: all characters have their literal meaning and must be preceded by \ to activate their special meaning. So if you have forgotten which characters have special meaning in Vim, start the pattern with \v or \V to switch them all on or off.
+
+
+Check the current value of a setting:
+:set <setting>?
+
+
+Re-wrap comments to find in specified textwidth:
+gq<motion>
+Re-wrap inside current block:
+gqip
+
+
+Replace tabs with spaces in current document:
+:set expandtab [if not already set]
+:retab
+
+
+Update help after adding items to $HOME/.vim/doc:
+:helptags $HOME/.vim/doc
+
+
+Auto-indenting doesn't work but textwidth and formatoptions are set correctly:
+Make sure paste isn't set.
+
+
+I   append to start of current line (first non-whitespace character)
+A   append to end of current line
+
+
+Avoid escape key:
+ctrl-[ or ctrl-C
+If alt sends escape, use any alt + normal mode key combination:
+alt-o   opens a new line
+alt-A   appends to end of current line
+alt-p   pastes at current location
+alt-k   move up a line
+
+
+Numpad doesn't work over PuTTY:
+PuTTY Configuration -> Terminal -> Features -> Disable application keypad mode
+
+
+Capitalize the first letter of every word:
+:%s/\v<(.)(\w*)/\u\1\L\2/g
+
+
+Scroll through search history:
+q/ and then use j and k to scroll
+Scroll through command history:
+q: and then use j and k to scroll
+Open command history while entering a command:
+ctrl-f
+Previous command:
+ctrl-p
+Next command:
+ctrl-n
+
+
+To enter special characters (digraphs):
+Ctrl-k a:   Ä
+Use :digraphs to see the full list.
+Or enter by decimal value: ^Vnnn
+Ctrl-v 223  ß
+Note that special characters seem to show up weird in Cygwin vim.
+
+
+To substitute a newline in a search and replace command:
+\r
+Despite that \n matches a newline in the search side.
+http://stackoverflow.com/questions/71323/how-to-replace-a-character-for-a-newline-in-vim
+http://stackoverflow.com/questions/71417/why-is-r-a-newline-for-vim
+
+
+Replace ^M (linebreak) with an actual linebreak:
+:%s/<Ctrl-V><Ctrl-M>/\r/g
+
+
+Search or replace a range instead of entire file:
+:.,$s/search/replace/gc
+Actually, % is just shorthand for 1,$. Also, the initial period is assumed and can be left off.
+See :h range for more information.
+
+
+Resize split windows:
+Ctrl-w =: Distribute space equally to all windows (perfect if terminal has been resized)
+Ctrl-w r: Rotate windows (also ctrl-w ctrl-r)
+Ctrl-w -/+: Decrease/increase vertical size of current window
+Ctrl-w </>: Decrease/increase horizontal size of current window
+
+
+Ignore whitespace while diffing:
+set diffopt+=iwhite
+

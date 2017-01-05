@@ -1,0 +1,287 @@
+CPU/OS info:
+uname -a
+cat /proc/cpuinfo
+cat /etc/*-release
+
+
+CPU statistics:
+top <enter> 1 fj <enter> H
+
+
+/proc/sys/kernel/ documentation:
+https://www.kernel.org/doc/Documentation/sysctl/kernel.txt
+
+
+Profiling:
+opcontrol --init
+opcontrol --callgraph=10
+opcontrol --start
+opcontrol --stop
+opreport -c | less
+opcontrol --shutdown
+
+
+Change default terminal:
+Edit the line in /etc/passwd corresponding to the user for which you wish to change the shell. The last field is the login shell for the user.
+
+
+Open a shareable screen:
+screen
+Attach to an existing screen:
+screen -x
+Detach from screen (but don't kill it):
+Ctrl-a d
+
+
+To free pagecache, dentries and inodes:
+echo 3 > /proc/sys/vm/drop_caches
+
+
+Clear swap space:
+swapoff -a
+swapon -a
+
+
+Enable core dumping (use -Hc or -Sc to set hard/soft limits; leave off value to query the current value):
+ulimit -c unlimited
+Print out all shell resource limits:
+ulimit -a
+Check where dump files are written to (make sure the location is writable by the desired user):
+cat /proc/sys/kernel/core_pattern
+Open a new shell with a new ulimit set by root:
+sudo su -c "ulimit -u unlimited && exec su $LOGNAME"
+Check here for ulimit restrictions (as well as .bashrc and .profile):
+/etc/security/limits.conf
+Check here for setuid programs (0 to disable, 1 to fully enable for debugging, 2 to create dump as root):
+/proc/sys/fs/suid_dumpable
+Test to see if dumping is working:
+sleep 100 & kill -s SEGV %1
+
+
+RedHat-based systems use the file /etc/sysconfig/network to read the saved hostname at system boot. This is set using the init script /etc/rc.d/rc.sysinit
+Use 'hostname <name>' to change the hostname, or with no argument to print the current hostname.
+Individual interfaces can be manually edited at this location: /etc/sysconfig/network-scripts/ifcfg-*
+
+
+If gcc emits garbled characters, try one of these:
+unset LANG
+export LANG=en-US.utf-8
+
+
+Remove duplicates from a file without sorting:
+awk '!x[$0]++'
+
+
+Suspend running (foreground) job:
+ctrl+z
+Place suspended job in background:
+bg (%<n>)
+Place bg/stopped job in foreground.
+fg (%<n>)
+List all backgrounded processes:
+jobs
+
+
+Problems installing packages (Debian/Ubuntu):
+sudo apt-get install -f
+sudo dpkg --configure -a
+sudo apt-get update
+
+
+Unload a driver:
+rmmod <driver>
+Determine driver dependencies:
+depmod -aq
+Load a driver (after proper installation):
+modprobe <driver>
+
+
+SSH to multiple ports on the same host without warnings:
+$ ssh host.example.com
+Accept the fingerprint. This saves into the standard .ssh/known_hosts file.
+Logout of the server and ssh back with a new port and temporary known_hosts file:
+$ ssh -o "UserKnownHostsFile kh2" host.example.com -p 2222
+A new fingerprint prompt should appear. Accept it. Logout and copy the new fingerprint to the existing known_hosts file:
+$ cat kh2 >> .ssh/known_hosts && rm kh2
+
+
+Use gctags recursively on machines that use -R for deactivating regex instead of recursion:
+find . -type f | xargs gctags
+
+
+Delete empty folders:
+find <path> -empty -type d -delete
+
+
+Check which man sections are available:
+whatis <topic>
+Search manpages for a keyword:
+apropos <keyword>
+Locate relevant files for a command:
+whereis <command>
+
+
+Test and check if blank:
+if [ "${i:-0}" -ge 2 ] ; then ...
+
+
+Check DWARF version of a binary:
+readelf --debug-dump=info binary_name | grep -A 2 'Compilation Unit @'
+
+
+Count files in directory and subdirectories:
+find . -type f | wc -l
+
+
+Shell scripting assign default if not set:
+FOO=${VARIABLE:-default}
+Assign to VARIABLE as well:
+FOO=${VARIABLE:=default}
+
+
+Use screen to support multiple sessions:
+Create new session:
+ctrl-j c
+Switch between sessions:
+ctrl-j "
+Rename session:
+ctrl-j A
+Screen help:
+ctrl-j ?
+Detach:
+ctrl-j d
+Resume detached screen:
+screen -R
+
+
+Bash commandline editing (using readline):
+http://www.math.utah.edu/docs/info/features_7.html
+ctrl-a  Move to start of line
+ctrl-e  Move to end of line
+alt-f   Move to next word
+alt-b   Move to previous word
+ctrl-f  Move forward one character
+ctrl-b  Move back on character
+ctrl-u  Delete to start of line
+ctrl-k  Delete to end of line
+ctrl-w  Delete to start of word
+alt-d   Delete to end of word
+ctrl-d  Delete character under cursor (if no text in line, sends EOF/logout)
+ctrl-h  Backspace
+ctrl-y  Paste last deleted text
+ctrl-p  Move back through history
+ctrl-n  Move forward through history
+ctrl-r  Search back through history
+ctrl-s  Search forward through history
+ctrl-l  Clear screen; leave current line intact
+
+
+Some Valgrind notes:
+  $ valgrind --leak-check=full --db-attach=yes --track-fds=yes --log-socket=<my-ip-address> <program>
+
+This tells valgrind that I have started valgrind-listener in another terminal,
+so all valgrind related output should go there.  This makes sure that valgrind
+output isn't confused with program output. It also tells valgrind to ask me
+whether I want to use GDB to look at any errors that occur.
+
+Valgrind as profiler:
+  $ valgrind --tool=callgrind --cache-sim=yes --branch-sim=yes --dump-instr=yes --collect-jumps=yes <program>
+  $ kcachgrind
+
+
+Find + grep:
+find . -type f -exec grep -Hn 'something' {} +
+
+
+Grep for a tab character:
+grep $'\t'
+
+
+Access a server with ssh with a non-default port or user name:
+Add an alias to ~/.ssh/config like so:
+Host <alias>
+  HostName <server>
+  Port <port>
+  User <username>
+  IdentityFile ~/.ssh/id_rsa (or such; optional)
+
+
+Check progress of a dd:
+dd if=/dev/sdb of=/image.img &
+kill -SIGUSR1 %1 [or PID]
+
+
+Make a RedHat filesystem read-only:
+Edit /etc/sysconfig/readonly-root and change READONLY to yes.
+Remount read-only filesystem as writable:
+sudo mount -o remount,rw '/media/SGTL MSCN'
+
+
+LD_LIBRARY_PATH not respected due to RPATH issues:
+
+Use ldd to check what dynamic libraries are used for a given executable.
+If that isn't what is expected, try 'LD_DEBUG=all ldd <binary>'.
+
+Shared libraries are found by searching the following paths:
+1. The RPATH dynamic section attribute of the binary if present and RUNPATH attribute does not exist.
+2. The environment variable LD_LIBRARY_PATH. If the executable is a set-user-ID/set-group-ID binary, this is ignored.
+3. The RUNPATH dynamic section attribute of the binary if present.
+4. The cache file /etc/ld.so.cache which contains a compiled list of candidate libraries previously found in the augmented library path. If, however, the  binary was linked with -z nodeflib linker option, libraries in the default library paths are skipped.
+5. The default path /lib, and then /usr/lib. If the binary was linked with -z nodeflib linker option, this step is skipped.
+
+To check if RPATH is set, try this:
+readelf -a <binary> | grep RPATH
+
+To force setting (or not setting) the RPATH, set (or unset) the LD_RUN_PATH environment variable.
+
+
+Sticky bit, setuid, and setgid:
+https://en.wikipedia.org/wiki/Sticky_bit
+https://en.wikipedia.org/wiki/Setuid
+When a directory's sticky bit is set, the filesystem treats the files in such directories in a special way so only the file's owner, the directory's owner, or root user can rename or delete the file. Without the sticky bit set, any user with write and execute permissions for the directory can rename or delete contained files, regardless of the file's owner. The Linux kernel ignores the sticky bit on files.
+In Unix symbolic file system permission notation, the sticky bit is represented by the letter t in the final character-place.
+If the sticky-bit is set on a file or directory without the execution bit set for the others category (non-user-owner and non-group-owner), it is indicated with a capital T.
+The sticky bit can be set using the chmod command and can be set using its octal mode 1000 or by its symbol t.
+setuid and setgid (short for "set user ID upon execution" and "set group ID upon execution", respectively) are Unix access rights flags that allow users to run an executable with the permissions of the executable's owner or group respectively.
+Setting the setgid permission on a directory ("chmod g+s") causes new files and subdirectories created within it to inherit its group ID, rather than the primary group ID of the user who created the file (the owner ID is never affected, only the group ID). Newly created subdirectories inherit the setgid bit. 
+The setuid and setgid bits are normally set with the command chmod by setting the high-order octal digit to 4 for setuid or 2 for setgid (or chmod ug+s).
+
+
+Remove executable bit recursively on all files, excepting directories, and only if the bit is set:
+http://superuser.com/questions/234647/how-to-remove-executable-bit-recursively-from-files-not-directories
+find . -type f -perm +111 -exec chmod -x {} \;
+
+
+Bash 'strict mode' (i.e. #!/bin/bash -eu or set -o pipefail):
+http://redsymbol.net/articles/unofficial-bash-strict-mode/
+
+
+Find largest files:
+find . -xdev -type f -exec du -sh {} ';' | sort -rn | head -n50
+
+
+Find all extensions (file suffixes) in a given directory:
+find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u
+
+
+Find all hidden files and directories (recursively, ignored non-hidden files in hidden directories):
+find . -name '.*' 
+Fix image metadata (remove unsafe EXIF tags):
+exiftool -all= -tagsfromfile @ -all:all -unsafe <file>
+
+Fix image metadata dates:
+exiftool "-AllDates=YYYY:MM:DD HH:MM:SS" <file>
+
+
+Generate a flac fingerprint file:
+metaflac --show-md5sum *.flac > filename.ffp
+
+Compare a flac fingerprint file (either should work):
+cmp filename.ffp <(metaflac --show-md5sum *.flac)
+metaflac --show-md5sum *.flac | cmp filename.ffp
+
+
+Rip a DVD without transcoding (1 is the title and 34 the chapter):
+https://wiki.videolan.org/VLC_HowTo/Rip_a_DVD/
+vlc dvd:///dev/sr0#1:34 --sout "#standard{access=file,mux=ts,dst=dvdout.mpg}" vlc://quit
+Add --run-time=1.75 --stop-time=1.75 to control how long it streams (in real time) in seconds. This can be difficult to get just right.

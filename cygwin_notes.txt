@@ -1,0 +1,12 @@
+# Errors about remapping dlls, unable to write temp files, or unable to fork after installing new software:
+# http://superuser.com/questions/194529/cygwin-fatal-error-unable-to-remap-what-does-it-mean
+Close all cygwin instances and kill anything depending on cygwin1.dll.
+Run cmd.
+Run ash (just type 'ash').
+Run rebaseall (most likely in /usr/bin or /bin).
+
+
+# Run gvim from cygwin:
+Make sure Xming or some sort of X server is running.
+export DISPLAY=:0.0 (or whatever the port is)
+gvim <options> <files> -display 127.0.0.1:0.0 &

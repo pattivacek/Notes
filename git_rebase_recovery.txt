@@ -1,0 +1,37 @@
+1. If you have local changes not yet checked in, stash them:
+$ git stash
+
+2. Update master and all other branches to the most recent state of the old history. First fetch the old history:
+$ git remote add old <old-repo-name>
+$ git fetch old
+
+3. For each remote-tracking branch that you have checked out (including master), you will need to update them by rebasing. For each one, check out the branch and then do:
+$ git rebase old/<branch_name>
+
+For local branches not present in the origin repo, rebase them against the master branch:
+$ git rebase old/master
+
+4. If master or any other remote-tracking branch have local commits that you have not pushed to the origin, you should now run 'git status' and record the number of commits ahead of the origin your branch is. For local branches, use this command and then count the number of commits unique to your branch:
+$ git log <branch_name> ^origin/master
+
+5. Fetch the new history:
+$ git fetch
+
+6. Update each branch you have (including master) to the new version of the repo. Do NOT simply use 'git pull' or 'git rebase'. For remote-tracking branches without any local commits, check out the branch and use this:
+$ git reset --hard origin/<branch_name>
+
+For any remote-tracking branch that does have local commits, you will need to transfer your commits to the new history. You will need to know how many such commits you have, which you hopefully recorded in step 4. Check out the branch and use this:
+$ git rebase --onto origin/<branch_name> HEAD~<num_commits>
+This should work if that doesn't:
+$ git rebase --onto origin/<branch_name> old/<branch_name>
+
+For any local branch, you will need to rebase onto the new master branch. You will need to know how many unique commits you have as recorded in step 4. Check out the branch and use this:
+$ git rebase --onto origin/master HEAD~<num_commits>
+
+7. Run 'git status' and make sure everything looks like you would expect. If it does, restore your local changes if you stashed them in step 1:
+$ git stash pop
+
+8. Clean up the remote repo we added:
+$ git remote rm old
+
+Note that this will not immediately shrink the size of your checkout on your hard disk. Git will naturally garbage clean after 30 days, or you can force it to do so now if you really want to. (If you clone a new copy, you should see the results immediately.)
