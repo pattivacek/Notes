@@ -179,3 +179,7 @@ git ls-remote <bundle>
 
 # Rename branches remotely (without renaming any local branches at the same time):
 git push <remote> <remote>/<old_name>:refs/heads/<new_name> :<old_name>
+
+
+# Remove binaries or other arbitrary files from the entire history of the repo (this is dangerous and requires all users to rebase very carefully!):
+git filter-branch -d /dev/shm/temp.git --index-filter 'git rm -r --cached --ignore-unmatch *.exe *.sdf *.suo *.fig *.lib *.asv *.dll *.obj *.pdb *.mod *.log *.zip *.doc *.pptx *.pdf *.rtf' -- --all
