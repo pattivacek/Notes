@@ -9,3 +9,10 @@ Allocatable character array:
 !    allocate(string, source=helloworld(:n))    ! Does not work.
      allocate(string, source=(helloworld(:n)))  ! Works.
   end subroutine hello
+
+
+Allocatable arrays are automatically deallocated on exit (if not returned). Pointer arrays are not and must be manually deallocated.
+https://software.intel.com/en-us/forums/intel-visual-fortran-compiler-for-windows/topic/326100
+
+
+Note that 'continue' is basically a no-op. To get the desired effect of skipping to the next iteration of a loop, use 'cycle'. 'exit' is the equivalent of 'break' in C. It is also a common extension to end a program, similar to 'stop'. A name can be provided to 'cycle' or 'exit' to indicate which named construct (e.g., loop or block) should be affected.

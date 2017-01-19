@@ -1,0 +1,31 @@
+# Keyword help:
+help(keyword)
+# Short version (in IPython):
+?keyword
+# Find methods available in a given object:
+# http://stackoverflow.com/questions/34439/finding-what-methods-an-object-has
+dir(object)
+
+
+# Common gotchas:
+http://docs.python-guide.org/en/latest/writing/gotchas/
+
+
+# Reload a module that has changed:
+import importlib
+importlib.reload(some_module)
+
+
+# Compare values:
+a == b
+# Compare identities (location in memory):
+a is b
+
+# Usually, identity (is) implies equality (==). NaN is a counterexample.
+# The converse is not true: Two distinct objects can have the same value.
+# http://stackoverflow.com/questions/2988017/string-comparison-in-python-is-vs
+# String literals are interned in Python, meaning only one copy of each
+# distinct string value is stored. This requires that strings must be
+# immutable. Hence, if str1 = 'test' and str2 = 'test', str1 is str2 is True
+# (as is str1 == str2).
+# http://stackoverflow.com/questions/1504717/why-does-comparing-strings-in-python-using-either-or-is-sometimes-produce
