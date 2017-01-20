@@ -11,6 +11,11 @@ dir(object)
 http://docs.python-guide.org/en/latest/writing/gotchas/
 
 
+# Append to module search path:
+# http://stackoverflow.com/questions/67631/how-to-import-a-module-given-the-full-path
+sys.path.append('/path/')
+
+
 # Reload a module that has changed:
 import importlib
 importlib.reload(some_module)
@@ -29,3 +34,15 @@ a is b
 # immutable. Hence, if str1 = 'test' and str2 = 'test', str1 is str2 is True
 # (as is str1 == str2).
 # http://stackoverflow.com/questions/1504717/why-does-comparing-strings-in-python-using-either-or-is-sometimes-produce
+
+
+# If you've accidentally bound a necessary function name (such as 'str') to a value:
+# http://stackoverflow.com/questions/24637266/typeerror-list-object-is-not-callable-when-trying-to-convert-an-object-to-a-stri
+# http://stackoverflow.com/questions/8237647/clear-variable-in-python
+del str
+
+
+# Expand a tuple/list into function input parameters:
+# http://stackoverflow.com/questions/1993727/expanding-tuples-into-arguments
+function(*tuple)
+
