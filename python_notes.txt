@@ -46,3 +46,8 @@ del str
 # http://stackoverflow.com/questions/1993727/expanding-tuples-into-arguments
 function(*tuple)
 
+
+# If IPython kernel crashes when re-running an application that initializes PyQt:
+# http://stackoverflow.com/questions/24041259/python-kernel-crashes-after-closing-an-pyqt4-gui-application
+app = 0
+app = QtGui.QApplication([])
