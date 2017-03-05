@@ -274,11 +274,11 @@ exiftool "-AllDates=YYYY:MM:DD HH:MM:SS" <file>
 
 
 Generate a flac fingerprint file:
-metaflac --show-md5sum *.flac > filename.ffp
+metaflac --show-md5sum *.flac > fingerprints.ffp
 
 Compare a flac fingerprint file (either should work):
-cmp filename.ffp <(metaflac --show-md5sum *.flac)
-metaflac --show-md5sum *.flac | cmp filename.ffp
+cmp fingerprints.ffp <(metaflac --show-md5sum *.flac)
+metaflac --show-md5sum *.flac | cmp fingerprints.ffp
 
 
 Rip a DVD without transcoding (1 is the title and 34 the chapter):
