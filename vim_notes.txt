@@ -356,3 +356,8 @@ Ctrl-w </>: Decrease/increase horizontal size of current window
 Ignore whitespace while diffing:
 set diffopt+=iwhite
 
+
+Open tagged definition in a new tab:
+https://stackoverflow.com/questions/539231/how-to-use-multiple-tabs-when-tagging-to-a-function-in-vim
+https://stackoverflow.com/questions/563616/vim-and-ctags-tips-and-tricks
+<C-w><C-]><C-w>T
