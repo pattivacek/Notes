@@ -361,3 +361,12 @@ Open tagged definition in a new tab:
 https://stackoverflow.com/questions/539231/how-to-use-multiple-tabs-when-tagging-to-a-function-in-vim
 https://stackoverflow.com/questions/563616/vim-and-ctags-tips-and-tricks
 <C-w><C-]><C-w>T
+
+
+Initialize cscope:
+# cscope -Rb [in terminal at project root]
+:cs add cscope.out [in vim]
+
+Find function callers:
+:cs find c <func_name>
+
