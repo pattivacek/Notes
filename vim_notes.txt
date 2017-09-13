@@ -370,3 +370,9 @@ Initialize cscope:
 Find function callers:
 :cs find c <func_name>
 
+
+Find what filetype is loaded:
+https://stackoverflow.com/questions/2779379/find-what-filetype-is-loaded-in-vim
+:set filetype?
+(or just :se ft)
+
