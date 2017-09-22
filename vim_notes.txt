@@ -364,7 +364,7 @@ https://stackoverflow.com/questions/563616/vim-and-ctags-tips-and-tricks
 
 
 Initialize cscope:
-# cscope -Rb [in terminal at project root]
+$ cscope -Rb [in terminal at project root]
 :cs add cscope.out [in vim]
 
 Find function callers:
@@ -376,3 +376,9 @@ https://stackoverflow.com/questions/2779379/find-what-filetype-is-loaded-in-vim
 :set filetype?
 (or just :se ft)
 
+
+Keyboard navigation of command line/mode/window (either works):
+https://stackoverflow.com/questions/6920943/navigating-in-vims-command-mode
+https://stackoverflow.com/questions/2075569/how-can-i-move-around-in-the-vim-command-line
+q:
+: Ctrl-f
