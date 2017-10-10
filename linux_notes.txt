@@ -285,3 +285,12 @@ Rip a DVD without transcoding (1 is the title and 34 the chapter):
 https://wiki.videolan.org/VLC_HowTo/Rip_a_DVD/
 vlc dvd:///dev/sr0#1:34 --sout "#standard{access=file,mux=ts,dst=dvdout.mpg}" vlc://quit
 Add --run-time=1.75 --stop-time=1.75 to control how long it streams (in real time) in seconds. This can be difficult to get just right.
+
+
+Find all the files a package installed onto your system:
+https://askubuntu.com/questions/32507/how-do-i-get-a-list-of-installed-files-from-a-package/
+dpkg-query -L <package_name>
+Find the files a .deb file will install:
+dpkg-deb -c <package_name.deb>
+
+
