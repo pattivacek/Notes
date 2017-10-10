@@ -1,68 +1,72 @@
 http://mislav.uniqpath.com/2010/07/git-tips/
 http://cheat.errtheblog.com/s/git
 
+
 # Put the current git branch (if applicable) into our prompt
 PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
 
-Show remote origin URL:
+
+# Show remote origin URL:
 git remote show origin
 
-Undo all working dir changes including new files:
+
+# Undo all working dir changes including new files:
 git reset --hard
 git clean -f -x -d (this is dangerous and will delete all untracked files and directories!)
 
-Commit only part of a file (do *not* do git commit -a):
-git add -p filename.x
-    * hit s to split whatever change into smaller chunks
-    * then hit y to stage that chunk
-          o or n to not stage that hunk
-          o or e to manually edit the chunk (useful when git can't split it automatically)
-    * and d to exit or go to the next file.
-    * Use ? to get the whole list of available options.
+
+# Commit only part of a file (git commit -p works too):
+git add -p <filename>
+    * y - stage this hunk
+    * n - do not stage this hunk
+    * d - do not stage this hunk or any of the later hunks in the file
+    * s - split the current hunk into smaller hunks
+    * e - manually edit the current hunk
+    * ? - print help
 git commit
 
 
-Show the changes in the cache/index (i.e. staged changes) against the current HEAD. --staged is a synonym for --cached.
+# Show the changes in the cache/index (i.e. staged changes) against the current HEAD. --staged is a synonym for --cached.
 git diff --cached
 
 
-Split older commits:
+# Split older commits:
 git rebase -i <upstream>
-Mark the appropriate commits with 'e'
+# Mark the appropriate commits with 'e'
 git reset HEAD^
 git add <relevant changes>
 git commit
-Repeat last two steps as necessary
+# Repeat last two steps as necessary
 git rebase --continue
 
 
-Push a specific branch:
+# Push a specific branch:
 git push origin <branch>
-Push the checked-out branch:
+# Push the checked-out branch:
 git push origin HEAD
 
 
-Undo previous commit:
-$ git reset --soft HEAD^      (1)
-<edit>                        (2)
-$ git add ....                (3)
-$ git commit -c ORIG_HEAD     (4)
+# Undo previous commit:
+git reset --soft HEAD^      (1)
+<edit>                      (2)
+git add ....                (3)
+git commit -c ORIG_HEAD     (4)
 
-Or:
+# Or:
 git commit --amend
 
 
-Rebase or edit the root commit (from 1.7.2 onward):
+# Rebase or edit the root commit (from 1.7.2 onward):
 git rebase -i --root
-To edit, make desired changes, add them, and finish the commit with:
+# To edit, make desired changes, add them, and finish the commit with:
 git commit --amend
 
 
-Rebase to remote repo:
+# Rebase to remote repo:
 git pull --rebase <repo> <branch>
 
 
-Cherry-pick a range of commits in pre-1.7.2:
+# Cherry-pick a range of commits in pre-1.7.2:
 # Assume that tag A is the commit on top of which the patch series that you want to select is based and that tag B is the commit of the final patch in the series.
 # Also, assume that br is the name of the current branch and the branch where the new patch series should be applied.
 # Checkout a new temporary branch at the current location
@@ -81,27 +85,31 @@ git diff -M -C -C
 # To view the log of a file that has been moved/renamed (only works for a single file):
 git log --follow <filepath>
 
+
 # View last stash as a patch:
 git stash show -p
 # View past stash n as a patch:
 git stash show -p stash@{n}
 
+
 # Compare commit against its parent:
 git diff COMMIT^!
 
+
 # grep through entire git history:
 # http://stackoverflow.com/questions/2928584/how-to-grep-search-committed-code-in-the-git-history
-git grep 'search-string' $(git rev-list --all) 
+git grep 'search-string' $(git rev-list --all)
 # grep through remote branches:
 git grep 'search-string' $(git ls-remote . 'refs/remotes/*' | cut -f 2)
 # If you run into an "Argument list too long" error:
-git rev-list --all | xargs git grep expression 
+git rev-list --all | xargs git grep expression
 # If you want to limit the search to some subtree (for instance "lib/util") you can pass that to the rev-list subcommand:
 git grep <regexp> $(git rev-list --all -- lib/util)
 
 
 # View commits in one branch but not in another:
 git log <branch> ^<excluded_branch> --no-merges
+
 
 # Delete a remote branch (either works):
 git push origin --delete <branchName>
@@ -160,16 +168,16 @@ git rebase --onto origin/master HEAD~4
 
 
 # Track and pull all remote branches into local branches:
-# http://stackoverflow.com/a/4754797/289099 
-for BRANCH in $(git branch -a | grep remotes | grep -v HEAD | grep -v master); do git branch --track "${BRANCH#remotes/origin/}" "${BRANCH}"; done 
+# http://stackoverflow.com/a/4754797/289099
+for BRANCH in $(git branch -a | grep remotes | grep -v HEAD | grep -v master); do git branch --track "${BRANCH#remotes/origin/}" "${BRANCH}"; done
 git pull --all
 
 
 # Rename branch locally and remotely:
 # https://gist.github.com/lttlrck/9628955
 # First make sure your local branch has the same commits as the branch in origin!
-git branch -m old_branch new_branch         # Rename branch locally    
-git push origin :old_branch                 # Delete the old branch    
+git branch -m old_branch new_branch         # Rename branch locally
+git push origin :old_branch                 # Delete the old branch
 git push --set-upstream origin new_branch   # Push the new branch, set local branch to track the new remote
 
 
