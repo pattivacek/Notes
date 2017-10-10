@@ -92,6 +92,13 @@ git stash show -p
 git stash show -p stash@{n}
 
 
+# Rename a stash (requires git 1.8.4 or later, works with dirty working directory):
+# https://stackoverflow.com/a/35549615/289099
+git stash drop stash@{1}
+# This prints something like this: Dropped stash@{1} (<hash>)
+git stash store -m "message" <hash>
+
+
 # Compare commit against its parent:
 git diff COMMIT^!
 
