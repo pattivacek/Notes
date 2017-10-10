@@ -1,0 +1,14 @@
+Never remove any files by hand from the tmp/deploy directory inside the Build Directory. Always use the various BitBake clean tasks to clear out previous build artifacts.
+Clean up your tmp dir for the given package:
+$ bitbake -c clean foo
+Clean shared state (roughly the same as removing tmp and sstate-cache):
+$ bitbake -c cleansstate linux-yocto
+Roughly the same as removing tmp, sstate-cache, and downloads:
+$ bitbake -c cleanall linux-yocto
+
+
+# native, nativesdk, cross, etc.
+# https://lists.yoctoproject.org/pipermail/yocto/2015-January/023126.html
+By default, recipes bake binaries for the target architecture that is described in the MACHINE variable in the local.conf.
+One can use BBCLASSEXTEND = "native nativesdk" to bake binaries for the host architecture (native) and for target sdk architecture. The target sdk architecture is described in the SDKMACHINE variable and the host architecture is the architecture of the machine executing bitbake. BBCLASSEXTEND = "native nativesdk" will alow you to bake recipes that are "virtual" using the suffix native ( so ${PN}-native) and the prefix nativesdk (so nativesdk-${PN}).
+Recipes that are cross need to inherit cross.bbclass. They are used for cross tools, i.e. tools that need to run in the native context and produce some binary output for the target.
