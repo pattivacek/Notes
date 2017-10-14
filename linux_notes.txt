@@ -294,3 +294,10 @@ Find the files a .deb file will install:
 dpkg-deb -c <package_name.deb>
 
 
+Replace or add a prefix to multiple files (use -n to preview):
+rename 's/^old/new' <files>
+
+
+Reduce size/quality of a pdf:
+gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages -dCompressFonts=true -sOutputFile=output.pdf <input.pdf>
+Can also try other options for dPDFSETTINGS such as screen and default, or adding -r150 for pixel count, but those options are usually less ideal.
