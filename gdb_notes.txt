@@ -1,10 +1,13 @@
+Show backtrace of all threads:
 thread apply all backtrace (thr ap al bt)
 
-gdb --pid=`pgrep exelerate`
-gdb exelerate /export0/crash/`ls -t /export0/crash/ | head -n 1`
 
-gdb --pid=`pgrep bpodserver`
-gdb bpodserver /export0/crash/`ls -t /export0/crash/ | head -n 1`
+Attach to running program:
+gdb --pid=`pgrep <program>`
+
+
+Attach to core dump:
+gdb <program> <dump_dir>/`ls -t <dump_dir>/ | head -n 1`
 
 
 Prevent gdb from jumping threads:
