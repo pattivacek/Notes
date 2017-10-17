@@ -301,3 +301,12 @@ rename 's/^old/new' <files>
 Reduce size/quality of a pdf:
 gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages -dCompressFonts=true -sOutputFile=output.pdf <input.pdf>
 Can also try other options for dPDFSETTINGS such as screen and default, or adding -r150 for pixel count, but those options are usually less ideal.
+
+
+Set terminal title:
+https://askubuntu.com/questions/22413/how-to-change-gnome-terminal-title
+echo -ne "\033]0;SOME TITLE HERE\007"
+Using a script:
+termtitle.sh "some title here"
+In .bashrc:
+PROMPT_COMMAND='echo -ne "\033]0;SOME TITLE HERE\007"'
