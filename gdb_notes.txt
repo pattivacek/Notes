@@ -52,3 +52,7 @@ Ctrl-X, O
 
 List breakpoints:
 i b
+
+
+Load symbol table from an executable file (sometimes necessary for remote debugging if the symbol table can't be found):
+symbol-file <file>
