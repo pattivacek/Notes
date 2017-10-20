@@ -74,6 +74,7 @@ F<Charcter> (Searching Charcter Backword Ex. Fg,2Ft)
 t<Charcter> (Search till Forward )
 T<Charcter> (Search till Backword)
 ;   repeat last f, F, t, T
+,   repeat last f, F, t, T in the opposite direction
 
 Current line information:
 CTRL-G (Where I am in the File)
@@ -294,11 +295,6 @@ A   append to end of current line
 
 Avoid escape key:
 ctrl-[ or ctrl-C
-If alt sends escape, use any alt + normal mode key combination:
-alt-o   opens a new line
-alt-A   appends to end of current line
-alt-p   pastes at current location
-alt-k   move up a line
 
 
 Numpad doesn't work over PuTTY:
@@ -368,7 +364,7 @@ $ cscope -Rb [in terminal at project root]
 :cs add cscope.out [in vim]
 
 Find function callers:
-:cs find c <func_name>
+:cs f c <func_name>
 
 
 Find what filetype is loaded:
@@ -382,3 +378,32 @@ https://stackoverflow.com/questions/6920943/navigating-in-vims-command-mode
 https://stackoverflow.com/questions/2075569/how-can-i-move-around-in-the-vim-command-line
 q:
 : Ctrl-f
+
+
+Syntastic commands:
+:SyntasticCheck (manually check right now)
+:Errors (open the |location-list| window)
+:lclose (close it)
+
+
+CtrlP commands:
+:CtrlP (invoke CtrlP in find file mode)
+<F5> to purge the cache for the current directory to get new files, remove deleted files and apply new ignore options.
+<c-f> and <c-b> to cycle between modes.
+<c-d> to switch to filename search instead of full path.
+<c-r> to switch to regexp mode.
+<c-j>, <c-k> or the arrow keys to navigate the result list.
+<c-t> or <c-v>, <c-x> to open the selected entry in a new tab or in a new split.
+<c-n>, <c-p> to select the next/previous string in the prompt's history.
+<c-y> to create a new file and its parent directories.
+<c-z> to mark/unmark multiple files and <c-o> to open them.
+
+
+Repeat a command only on lines within a given range matching a pattern (similiar to :s//):
+:[range]g[lobal]/{pattern}/[cmd]
+
+
+Built-in autocomplete:
+Ctrl-n or Ctrl-p
+Whole-line completion:
+Ctrl-x Ctrl-l
