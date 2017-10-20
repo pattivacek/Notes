@@ -310,3 +310,9 @@ Using a script:
 termtitle.sh "some title here"
 In .bashrc:
 PROMPT_COMMAND='echo -ne "\033]0;SOME TITLE HERE\007"'
+
+
+Add entries to /etc/resolv.conf in Ubuntu 17.04+:
+https://askubuntu.com/a/51332/173694
+Add them to /etc/resolvconf/resolv.conf.d/head (or tail), then:
+sudo resolvconf -u
