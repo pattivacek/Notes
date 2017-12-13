@@ -12,3 +12,7 @@ $ bitbake -c cleanall linux-yocto
 By default, recipes bake binaries for the target architecture that is described in the MACHINE variable in the local.conf.
 One can use BBCLASSEXTEND = "native nativesdk" to bake binaries for the host architecture (native) and for target sdk architecture. The target sdk architecture is described in the SDKMACHINE variable and the host architecture is the architecture of the machine executing bitbake. BBCLASSEXTEND = "native nativesdk" will alow you to bake recipes that are "virtual" using the suffix native ( so ${PN}-native) and the prefix nativesdk (so nativesdk-${PN}).
 Recipes that are cross need to inherit cross.bbclass. They are used for cross tools, i.e. tools that need to run in the native context and produce some binary output for the target.
+
+
+# Format according to OE styleguide (mostly just recommended variable order, but might be out of date and doesn't understand everything):
+meta-openembedded/contrib/oe-stylize.py

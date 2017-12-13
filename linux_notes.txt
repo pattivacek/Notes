@@ -294,6 +294,10 @@ Find the files a .deb file will install:
 dpkg-deb -c <package_name.deb>
 
 
+List all the files inside an rpm package:
+rpm -qlp <file.rpm>
+
+
 Replace or add a prefix to multiple files (use -n to preview):
 rename 's/^old/new' <files>
 
@@ -316,3 +320,7 @@ Add entries to /etc/resolv.conf in Ubuntu 17.04+:
 https://askubuntu.com/a/51332/173694
 Add them to /etc/resolvconf/resolv.conf.d/head (or tail), then:
 sudo resolvconf -u
+
+
+Rotate, revoke, cross-sign, etc. gpg keys:
+https://sungo.wtf/2016/11/23/gpg-strong-keys-rotation-and-keybase.html

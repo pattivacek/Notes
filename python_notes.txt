@@ -51,3 +51,7 @@ function(*tuple)
 # http://stackoverflow.com/questions/24041259/python-kernel-crashes-after-closing-an-pyqt4-gui-application
 app = 0
 app = QtGui.QApplication([])
+
+
+# Get Python path (from which modules can be imported):
+print(sys.path)
