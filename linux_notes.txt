@@ -324,3 +324,7 @@ sudo resolvconf -u
 
 Rotate, revoke, cross-sign, etc. gpg keys:
 https://sungo.wtf/2016/11/23/gpg-strong-keys-rotation-and-keybase.html
+
+
+Map local network and find servers with port 22 open:
+nmap -p 22 --open -sV 192.168.1.1/24
