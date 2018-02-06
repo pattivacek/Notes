@@ -252,7 +252,7 @@ http://superuser.com/questions/234647/how-to-remove-executable-bit-recursively-f
 find . -type f -perm +111 -exec chmod -x {} \;
 
 
-Bash 'strict mode' (i.e. #!/bin/bash -eu or set -o pipefail):
+Bash 'strict mode' (i.e. #!/bin/bash or set -euo pipefail):
 http://redsymbol.net/articles/unofficial-bash-strict-mode/
 
 
@@ -328,3 +328,19 @@ https://sungo.wtf/2016/11/23/gpg-strong-keys-rotation-and-keybase.html
 
 Map local network and find servers with port 22 open:
 nmap -p 22 --open -sV 192.168.1.1/24
+
+
+Wireless control:
+nmcli
+nm-applet
+
+
+Gnome settings/controls:
+gnome-control-center
+
+
+# Reuse output of last command:
+$(!!)
+# For example, use output of grep to open the files in vim:
+grep <pattern> -rI <files>
+vim -p $(!! -l)
