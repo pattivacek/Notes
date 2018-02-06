@@ -1,0 +1,122 @@
+# Build for qemu:
+source meta-updater/scripts/envsetup.sh qemux86-64
+bitbake core-image-minimal
+
+# Launch qemu:
+../meta-updater/scripts/run-qemu-ota core-image-minimal
+
+# Build for Raspberry Pi:
+source meta-updater/scripts/envsetup.sh raspberrypi3
+bitbake rpi-basic-image
+
+# Write image to SD card (where <device> is something like sdb or sdd):
+sudo ../meta-updater-raspberrypi/scripts/flash-image.sh <device>
+
+# Connect to Raspberry Pi over serial:
+sudo picocom -b 115200 /dev/ttyUSB0
+
+
+# https://github.com/advancedtelematic/aktualizr#building-with-docker
+# Build with Docker:
+docker build -t advancedtelematic/aktualizr .
+
+# Run with Docker:
+docker run --rm -it advancedtelematic/aktualizr src/scripts/test.sh
+docker run --rm -it advancedtelematic/aktualizr src/scripts/coverage.sh
+
+# The following command will get a shell to perform an interactive build, but note that your local working copy will not be synchronised with the Docker container. The recommended development workflow is perform local cmake builds, but passing -v $(pwd):/aktualizr-local to docker run is an alternative.
+docker run --rm -it advancedtelematic/aktualizr
+
+
+# Check which OSTree commit is deployed on a device:
+ostree admin status
+
+# OSTree usage guide:
+https://docs.atsgarage.com/tips/ostree-usage.html
+
+
+# Cross-compile and debug:
+https://www.yoctoproject.org/docs/current/dev-manual/dev-manual.html#platdev-gdb-remotedebug
+
+1. Add the following to local.conf:
+TOOLCHAIN_HOST_TASK_append = " nativesdk-cmake "
+
+2. Build the SDK. This will create a self-extracting installer that can be copied to your development machine:
+bitbake -c populate_sdk core-image-minimal
+
+3. Install the SDK:
+./tmp/deploy/sdk/poky-sota-glibc-x86_64-core-image-minimal-core2-64-toolchain-2.2.2.sh
+
+4. Update the environment to point to the cross compilers, and create a cmake build directory for this cross-compile:
+. /opt/poky-sota/2.2.2/environment-setup-core2-64-poky-linux
+which cmake
+
+mkdir build-cross
+cd build-cross
+cmake ..
+make
+
+5. The built 'aktualizr' executable can be copied to the remote system and run.
+
+Aktualizr can be debugged remotely by exposing a port from the VM to development machine (the --gdb option to the run-qemu-ota script in meta-updater does this), then:
+
+On the target:
+gdbserver 0.0.0.0:2159 ./aktualizr --config /usr/lib/sota/sota.toml --loglevel 0
+
+On the host:
+gdb aktualizr
+(in gdb:) target remote localhost:2159
+
+
+
+# create root CA
+openssl req -nodes -new -x509 -keyout ca.key -out ca.crt -subj "/"
+
+# create client certificate
+openssl req -new -newkey rsa:1024 -nodes -keyout client.key -out client.csr -subj "/"
+openssl x509 -req -days 1 -set_serial 01 -CA intermediary.crt -CAkey intermediary.key -in client.csr -out client.crt
+
+# upload chain of trust
+http -v put http://ci-crypt.gw.prod01.internal.advancedtelematic.com/accounts/auth0%7C59aebf788f649c3f8512b7df/certchain Content-Type:"application/x-pem-file" @ca.crt
+
+# Extract Common Name from certificate:
+openssl x509 -noout -subject -in server.pem
+
+
+# To build a specific branch of Aktualizr, you can add the following to local.conf (or pass it via bitbake):
+BRANCH_pn-aktualizr = "bugfix/PRO-3825/ostreerefname"
+BRANCH_pn-aktualizr-native = "bugfix/PRO-3825/ostreerefname"
+
+# Then you can either ask for the latest revision with:
+require classes/sota_bleeding.inc
+
+# Or specify an explicit revision:
+SRCREV_pn-aktualizr = "1004efa3f86cef90c012b34620992b5762b741e3"
+SRCREV_pn-aktualizr-native = "1004efa3f86cef90c012b34620992b5762b741e3"
+
+
+# Build with PKCS11 support:
+cmake ../ -DBUILD_P11=ON -DTEST_PKCS11_ENGINE_PATH=/usr/lib/x86_64-linux-gnu/openssl-1.0.2/engines/libpkcs11.so -DTEST_PKCS11_MODULE_PATH="/usr/lib/softhsm/libsofthsm2.so"
+# Install these:
+sudo apt install libengine-pkcs11-openssl opensc libp11-2 libp11-dev softhsm2
+# Then run scripts/setup_hsm.sh as sudo, but fixing the paths.
+
+
+# Find garage-push command:
+find . -iname 'run*ostreepush'
+# Should be something like this:
+./tmp/work/qemux86_64-poky-linux/core-image-minimal/1.0-r0/temp/run.do_image_ostreepush
+# Bitbake command to do the same (although will most likely be cached):
+bitbake -c do_image_ostreepush core-image-minimal
+
+
+# Find latest OSTree repo ref:
+cat tmp/deploy/images/qemux86-64/ostree_repo/refs/heads/qemux86-64
+
+
+# Basic garage-deploy usage (get commit hash with above command):
+garage-deploy -f <fetch-creds> -p <push-creds> --commit <hash> -h qemux86-64 --name qemux86-64 --cacert tmp/sysroots-components/x86_64/ca-certificates-native/etc/ssl/certs/ca-certificates.crt
+
+
+# Find QA tuf repo version for tuf-cli (garage-sign) compatibility:
+curl -s https://qa-tuf-reposerver-pub.gw.staging.atsgarage.com/health/version | jq -r .version
