@@ -335,8 +335,10 @@ nmcli
 nm-applet
 
 
-Gnome settings/controls:
+# Gnome settings/controls:
 gnome-control-center
+# If using an environment other than gnome or unity:
+env XDG_CURRENT_DESKTOP=GNOME gnome-control-center
 
 
 # Reuse output of last command:
@@ -344,3 +346,27 @@ $(!!)
 # For example, use output of grep to open the files in vim:
 grep <pattern> -rI <files>
 vim -p $(!! -l)
+
+
+# Add third monitor:
+xrandr --output DP-1-4 --auto && xrandr --output DP-1-4 --right-of HDMI-1
+
+
+# Virtualbox control:
+https://askubuntu.com/questions/457329/shutting-down-all-virtualbox-vagrant-vms-in-one-easy-to-use-bash-command-that
+# List running machines (returns name and UUID):
+VBoxManage list runningvms
+# Stop running VMs by "hibernating" them (reommended to avoid data loss):
+VBoxManage controlvm <name|uuid> savestate
+# Poweroff running VMs (not recommended because we may lose data in the guest):
+VBoxManage controlvm <name|uuid> poweroff
+# Use ACPI in an ACPI-aware guest OS (preferable to poweroff for graceful shutdown of guests):
+VBoxManage controlvm <name|uuid> acpipowerbutton
+
+
+# Send new gpg key to several keyservers:
+for ks in keys.gnupg.net pool.sks-keyservers.net keyserver.ubuntu.com pgp.mit.edu; do gpg --keyserver $ks --send-key <keyid>; done
+
+
+# Unicode characters and their compose key combinations:
+/usr/share/X11/locale/en_US.UTF-8/Compose

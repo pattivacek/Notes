@@ -407,3 +407,8 @@ Built-in autocomplete:
 Ctrl-n or Ctrl-p
 Whole-line completion:
 Ctrl-x Ctrl-l
+
+
+Return to directory navigation after opening a file:
+https://stackoverflow.com/questions/9160499/go-to-back-directory-browsing-after-opening-file-in-vim
+:Rex[plore]

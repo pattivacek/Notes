@@ -1,3 +1,7 @@
+Useful bitbake commands:
+https://community.nxp.com/docs/DOC-94953
+
+
 Never remove any files by hand from the tmp/deploy directory inside the Build Directory. Always use the various BitBake clean tasks to clear out previous build artifacts.
 Clean up your tmp dir for the given package:
 $ bitbake -c clean foo
@@ -16,3 +20,16 @@ Recipes that are cross need to inherit cross.bbclass. They are used for cross to
 
 # Format according to OE styleguide (mostly just recommended variable order, but might be out of date and doesn't understand everything):
 meta-openembedded/contrib/oe-stylize.py
+
+
+# Building for debug hack:
+For every binary you want to debug (executables and shared libraries alike) you need to add these two lines in the recipe:
+
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+INHIBIT_PACKAGE_STRIP = "1"
+
+You also need to make it build with debug symbols, which is recipe-dependent. For akualizr it means specifying
+
+-DCMAKE_BUILD_TYPE=Debug
+
+instead of Release. I suspect that it's not the proper way, but it's simple and straightforward. It doesn't install the sources on the device though, so I normally open the source file on my host machine.

@@ -120,3 +120,7 @@ garage-deploy -f <fetch-creds> -p <push-creds> --commit <hash> -h qemux86-64 --n
 
 # Find QA tuf repo version for tuf-cli (garage-sign) compatibility:
 curl -s https://qa-tuf-reposerver-pub.gw.staging.atsgarage.com/health/version | jq -r .version
+
+
+# Build ostree image without pushing it with garage-push:
+bitbake -c do_image_ostree core-image-minimal
