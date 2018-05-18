@@ -208,3 +208,7 @@ git filter-branch -d /dev/shm/temp.git --index-filter 'git rm -r --cached --igno
 
 # Reset all projects in a repo:
 repo forall -vc "git reset --hard"
+
+
+# View commits to be rebased while resolving conflicts:
+vim .git/rebase-apply/0001

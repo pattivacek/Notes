@@ -370,3 +370,8 @@ for ks in keys.gnupg.net pool.sks-keyservers.net keyserver.ubuntu.com pgp.mit.ed
 
 # Unicode characters and their compose key combinations:
 /usr/share/X11/locale/en_US.UTF-8/Compose
+
+
+# Redirect stdout and stderr (use >> for append):
+command &> logfile
+command > logfile 2>&1

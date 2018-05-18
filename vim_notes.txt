@@ -363,6 +363,14 @@ Initialize cscope:
 $ cscope -Rb [in terminal at project root]
 :cs add cscope.out [in vim]
 
+Reset cscope:
+https://stackoverflow.com/questions/2744010/update-cscope-db-from-vim
+First, you need to update cscope database.
+:!cscope -Rbq
+Then, reinit the database from vim.
+:cs reset
+
+
 Find function callers:
 :cs f c <func_name>
 
