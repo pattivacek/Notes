@@ -420,3 +420,12 @@ Ctrl-x Ctrl-l
 Return to directory navigation after opening a file:
 https://stackoverflow.com/questions/9160499/go-to-back-directory-browsing-after-opening-file-in-vim
 :Rex[plore]
+
+
+Enable spellchecking:
+:setlocal spell spelllang=en_us
+Move to next bad word:
+]s
+Find suggestions for a bad word:
+z=
+
