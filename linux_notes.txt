@@ -266,6 +266,8 @@ find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u
 
 Find all hidden files and directories (recursively, ignored non-hidden files in hidden directories):
 find . -name '.*' 
+
+
 Fix image metadata (remove unsafe EXIF tags):
 exiftool -all= -tagsfromfile @ -all:all -unsafe <file>
 
@@ -375,3 +377,7 @@ for ks in keys.gnupg.net pool.sks-keyservers.net keyserver.ubuntu.com pgp.mit.ed
 # Redirect stdout and stderr (use >> for append):
 command &> logfile
 command > logfile 2>&1
+
+
+# Generate XKCD-style memorable passwords:
+shuf -n5 /usr/share/dict/words | tr '\n' ' ' && echo
