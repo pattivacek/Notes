@@ -184,9 +184,17 @@ so all valgrind related output should go there.  This makes sure that valgrind
 output isn't confused with program output. It also tells valgrind to ask me
 whether I want to use GDB to look at any errors that occur.
 
+ * --db-attach is now deprecated and will be removed in the next
+  valgrind feature release.  The built-in GDB server capabilities are
+  superior and should be used instead. Learn more here:
+  http://valgrind.org/docs/manual/manual-core-adv.html#manual-core-adv.gdbserver
+
 Valgrind as profiler:
   $ valgrind --tool=callgrind --cache-sim=yes --branch-sim=yes --dump-instr=yes --collect-jumps=yes <program>
   $ kcachgrind
+
+Track origins of unintialized values:
+valgrind --track-origins=yes
 
 
 Find + grep:
@@ -352,6 +360,12 @@ vim -p $(!! -l)
 
 # Add third monitor:
 xrandr --output DP-1-4 --auto && xrandr --output DP-1-4 --right-of HDMI-1
+# Add second monitor for standup:
+xrandr --output DP-2 --auto && xrandr --output DP-2 --right-of eDP-1
+# Fix mouse after re-docking:
+sudo rmmod usbhid && sudo modprobe usbhid
+# Set brightness:
+xrandr --output eDP-1 --brightness .1
 
 
 # Virtualbox control:
