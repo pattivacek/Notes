@@ -96,17 +96,17 @@ SRCREV_pn-aktualizr-native = "1004efa3f86cef90c012b34620992b5762b741e3"
 
 
 # Build with PKCS11 support:
-cmake ../ -DBUILD_P11=ON -DTEST_PKCS11_ENGINE_PATH=/usr/lib/x86_64-linux-gnu/openssl-1.0.2/engines/libpkcs11.so -DTEST_PKCS11_MODULE_PATH="/usr/lib/softhsm/libsofthsm2.so"
+cmake ../ -DBUILD_P11=ON -DTEST_PKCS11_ENGINE_PATH=/usr/lib/x86_64-linux-gnu/engines-1.1/libpkcs11.so -DTEST_PKCS11_MODULE_PATH="/usr/lib/softhsm/libsofthsm2.so"
 # Install these:
-sudo apt install libengine-pkcs11-openssl opensc libp11-2 libp11-dev softhsm2
-# Then run scripts/setup_hsm.sh as sudo, but fixing the paths.
+sudo apt install libengine-pkcs11-openssl opensc libp11-3 libp11-dev softhsm2
+# Then run scripts/setup_hsm.sh as sudo. May need to `sudo rm /var/lib/softhsm/tokens/` or change some paths.
 
 
 # Find garage-push command:
 find . -iname 'run*ostreepush'
 # Should be something like this:
 ./tmp/work/qemux86_64-poky-linux/core-image-minimal/1.0-r0/temp/run.do_image_ostreepush
-# Bitbake command to do the same (although will most likely be cached):
+# Bitbake command to run only that command (although will most likely be cached):
 bitbake -c do_image_ostreepush core-image-minimal
 
 
@@ -116,6 +116,8 @@ cat tmp/deploy/images/qemux86-64/ostree_repo/refs/heads/qemux86-64
 
 # Basic garage-deploy usage (get commit hash with above command):
 garage-deploy -f <fetch-creds> -p <push-creds> --commit <hash> -h qemux86-64 --name qemux86-64 --cacert tmp/sysroots-components/x86_64/ca-certificates-native/etc/ssl/certs/ca-certificates.crt
+# From bitbake build dir:
+tmp/work/x86_64-linux/aktualizr-native/1.0+gitAUTOINC+<hash>-7/build/src/sota_tools/garage-deploy --commit <commit> --name qemux86-64 -f ~/Documents/creds/<creds>.zip -p ~/Documents/creds/<creds>.zip -h qemux86-64 --cacert /etc/ssl/certs/ca-certificates.crt
 
 
 # Find QA tuf repo version for tuf-cli (garage-sign) compatibility:
@@ -124,3 +126,36 @@ curl -s https://qa-tuf-reposerver-pub.gw.staging.atsgarage.com/health/version | 
 
 # Build ostree image without pushing it with garage-push:
 bitbake -c do_image_ostree core-image-minimal
+
+
+# The systemd service can also be disabled by default by adding the following to local.conf:
+SYSTEMD_AUTO_ENABLE_aktualizr = "disable"
+
+
+# Build .debs for release:
+./scripts/run_docker_test.sh docker/Dockerfile.ubuntu.bionic -eTEST_INSTALL_DESTDIR=$PWD/temp -- ./scripts/build_ubuntu.sh
+
+
+# Standard ninja build and test command:
+ninja all build_tests format && CTEST_OUTPUT_ON_FAILURE=1 CTEST_PARALLEL_LEVEL=8 ctest
+
+
+# Get namespace in Firefox:
+Developer Console -> Storage tab -> Cookies -> app.atsgarage.com -> PLAY_SESSION -> Value
+Get the value of the PLAY_SESSION cookie. Decode it in JWT and it tells you your namespace. https://jwt.io/
+
+
+# aktualizr-cert-provider usage from bitbake build dir:
+tmp/work/x86_64-linux/aktualizr-native/1.0+gitAUTOINC+<hash>-7/build/src/cert-provider/aktualizr-cert-provider -c ~/Documents/creds/<creds>.zip -t qemu -s -u -r -g tmp/work/x86_64-linux/aktualizr-native/1.0+gitAUTOINC+<hash>-7/git/config/sota_implicit_prov_ca.toml
+
+
+# Jira search for unresolved tickets made my me or watched by me:
+project = OTA and (watcher = vacek or reporter = vacek) and resolution = Unresolved
+
+
+# Standard cmake line:
+cmake ../ -DBUILD_SOTA_TOOLS=ON -DBUILD_OSTREE=ON -DSOTA_PACKED_CREDENTIALS=/home/patrick/Documents/creds/sit_cred.zip -GNinja
+
+
+# Standard ninja line:
+ninja all build_tests format && CTEST_OUTPUT_ON_FAILURE=1 CTEST_PARALLEL_LEVEL=8 ctest
