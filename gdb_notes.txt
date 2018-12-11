@@ -56,3 +56,22 @@ i b
 
 Load symbol table from an executable file (sometimes necessary for remote debugging if the symbol table can't be found):
 symbol-file <file>
+
+
+Running with docker and getting "warning: Error disabling address space randomization: Operation not permitted":
+https://stackoverflow.com/questions/35860527/warning-error-disabling-address-space-randomization-operation-not-permitted
+docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined
+
+
+Print vtable (try increasing 10 if not enough functions are found):
+https://stackoverflow.com/questions/6191678/print-c-vtables-using-gdb
+p /a (*(void ***)obj)[0]@10
+
+Also try:
+info vtbl this
+
+
+Checkpoints (bookmark, snapshot, etc.):
+checkpoint - Save a snapshot of the debugged program’s current execution state. The checkpoint command takes no arguments, but each checkpoint is assigned a small integer id, similar to a breakpoint id.
+info checkpoints - List the checkpoints that have been saved in the current debugging session.
+restart checkpoint-id - Restore the program state that was saved as checkpoint number checkpoint-id. All program variables, registers, stack frames etc. will be returned to the values that they had when the checkpoint was saved. In essence, gdb will “wind back the clock” to the point in time when the checkpoint was saved.
