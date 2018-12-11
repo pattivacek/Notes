@@ -212,3 +212,24 @@ repo forall -vc "git reset --hard"
 
 # View commits to be rebased while resolving conflicts:
 vim .git/rebase-apply/0001
+
+
+# Delete all merged branches:
+# https://stackoverflow.com/questions/6127328/how-can-i-delete-all-git-branches-which-have-been-merged
+git checkout master && git branch --merged | grep -v "\*" | xargs -n 1 git branch -d
+
+
+# List all developers on a project
+# https://stackoverflow.com/questions/9597410/list-all-developers-on-a-project-in-git
+git shortlog --summary --numbered
+# or simply:
+git shortlog -sn
+# To get e-mail addresses as well, add -e
+# To show users from all branches (not only the ones in the current branch) you have to add --all
+
+
+# tig workflow:
+# move between commits with C-n, C-p
+# open interesting commit with Return
+# move inside with j, k, C-u, C-d... (C-n, C-p still work for switching commits)
+# if strong focus is needed, open commit in full screen with O, go back to commit view with q
