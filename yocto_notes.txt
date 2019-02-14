@@ -33,3 +33,12 @@ You also need to make it build with debug symbols, which is recipe-dependent. Fo
 -DCMAKE_BUILD_TYPE=Debug
 
 instead of Release. I suspect that it's not the proper way, but it's simple and straightforward. It doesn't install the sources on the device though, so I normally open the source file on my host machine.
+
+
+# Device runs out of space too soon:
+IMAGE_ROOTFS_EXTRA_SPACE = "565536"
+IMAGE_OVERHEAD_FACTOR = "3"
+
+
+# Using devtool for patching the soruce of a recipe:
+https://wiki.yoctoproject.org/wiki/TipsAndTricks/Patching_the_source_for_a_recipe
