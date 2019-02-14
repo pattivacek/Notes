@@ -233,3 +233,7 @@ git shortlog -sn
 # open interesting commit with Return
 # move inside with j, k, C-u, C-d... (C-n, C-p still work for switching commits)
 # if strong focus is needed, open commit in full screen with O, go back to commit view with q
+
+
+# Open all files changed in HEAD:
+vim -p $(git show --name-only --pretty="format:")
