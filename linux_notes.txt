@@ -366,6 +366,8 @@ xrandr --output DP-2 --auto && xrandr --output DP-2 --right-of eDP-1
 sudo rmmod usbhid && sudo modprobe usbhid
 # Set brightness:
 xrandr --output eDP-1 --brightness .1
+# Fix second/third monitor after re-docking (maybe):
+xrandr --auto && xrandr --output HDMI-1 --right-of eDP-1 && xrandr --output DP-1-4 --auto && xrandr --output DP-1-4 --right-of HDMI-1
 
 
 # Virtualbox control:
