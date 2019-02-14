@@ -79,6 +79,9 @@ openssl x509 -req -days 1 -set_serial 01 -CA intermediary.crt -CAkey intermediar
 # upload chain of trust
 http -v put http://ci-crypt.gw.prod01.internal.advancedtelematic.com/accounts/auth0%7C59aebf788f649c3f8512b7df/certchain Content-Type:"application/x-pem-file" @ca.crt
 
+# Better upload method:
+curl qa-crypt.gw.staging.internal.atsgarage.com/accounts/google-oauth2|107078658491180967735/certchain -X PUT -H 'content-type: application/x-pem-file' --upload-file "qa/devices/ca.crt"
+
 # Extract Common Name from certificate:
 openssl x509 -noout -subject -in server.pem
 
@@ -136,10 +139,6 @@ SYSTEMD_AUTO_ENABLE_aktualizr = "disable"
 ./scripts/run_docker_test.sh docker/Dockerfile.ubuntu.bionic -eTEST_INSTALL_DESTDIR=$PWD/temp -- ./scripts/build_ubuntu.sh
 
 
-# Standard ninja build and test command:
-ninja all build_tests format && CTEST_OUTPUT_ON_FAILURE=1 CTEST_PARALLEL_LEVEL=8 ctest
-
-
 # Get namespace in Firefox:
 Developer Console -> Storage tab -> Cookies -> app.atsgarage.com -> PLAY_SESSION -> Value
 Get the value of the PLAY_SESSION cookie. Decode it in JWT and it tells you your namespace. https://jwt.io/
@@ -157,5 +156,13 @@ project = OTA and (watcher = vacek or reporter = vacek) and resolution = Unresol
 cmake ../ -DBUILD_SOTA_TOOLS=ON -DBUILD_OSTREE=ON -DSOTA_PACKED_CREDENTIALS=/home/patrick/Documents/creds/sit_cred.zip -GNinja
 
 
-# Standard ninja line:
+# Standard ninja build and test command:
 ninja all build_tests format && CTEST_OUTPUT_ON_FAILURE=1 CTEST_PARALLEL_LEVEL=8 ctest
+
+
+# Print OSTree repo tree:
+ostree --repo=<repo-path> ls <commit-hash> -RC
+
+
+# Calculate hash of a json file:
+cat <file.json> | jq -M -c --sort-keys . | tr -d '\n' | sha256sum
