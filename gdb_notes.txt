@@ -75,3 +75,8 @@ Checkpoints (bookmark, snapshot, etc.):
 checkpoint - Save a snapshot of the debugged program’s current execution state. The checkpoint command takes no arguments, but each checkpoint is assigned a small integer id, similar to a breakpoint id.
 info checkpoints - List the checkpoints that have been saved in the current debugging session.
 restart checkpoint-id - Restore the program state that was saved as checkpoint number checkpoint-id. All program variables, registers, stack frames etc. will be returned to the values that they had when the checkpoint was saved. In essence, gdb will “wind back the clock” to the point in time when the checkpoint was saved.
+
+
+Print full string:
+https://stackoverflow.com/questions/233328/how-do-i-print-the-full-value-of-a-long-string-in-gdb
+set print elements 0
