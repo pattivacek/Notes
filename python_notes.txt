@@ -87,3 +87,8 @@ deactivate
 # Alternate command for python3:
 python3 -m venv myenv
 
+
+# Set breakpoint in multithreaded environment:
+# https://stackoverflow.com/questions/7617066/pdb-wont-stop-on-breakpoint
+# Add this to the code at the desired breakpoint:
+import pdb; pdb.set_trace()
