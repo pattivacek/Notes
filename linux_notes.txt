@@ -80,6 +80,9 @@ Place bg/stopped job in foreground.
 fg (%<n>)
 List all backgrounded processes:
 jobs
+Detach job from terminal:
+https://serverfault.com/questions/24425/can-i-nohup-screen-an-already-started-process
+disown %n
 
 
 Problems installing packages (Debian/Ubuntu):
