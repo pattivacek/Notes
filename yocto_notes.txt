@@ -21,8 +21,8 @@ Recipes that are cross need to inherit cross.bbclass. They are used for cross to
 # Format according to OE styleguide (mostly just recommended variable order, but might be out of date and doesn't understand everything):
 meta-openembedded/contrib/oe-stylize.py
 
-
 # Building for debug hack:
+# Try adding -dbg package instead.
 For every binary you want to debug (executables and shared libraries alike) you need to add these two lines in the recipe:
 
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
@@ -40,5 +40,5 @@ IMAGE_ROOTFS_EXTRA_SPACE = "565536"
 IMAGE_OVERHEAD_FACTOR = "3"
 
 
-# Using devtool for patching the soruce of a recipe:
+# Using devtool for patching the source of a recipe:
 https://wiki.yoctoproject.org/wiki/TipsAndTricks/Patching_the_source_for_a_recipe
