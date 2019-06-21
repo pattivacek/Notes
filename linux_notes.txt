@@ -427,3 +427,9 @@ export XDG_RUNTIME_DIR=/run/user/$UID
 # Permission denied despite 777:
 https://unix.stackexchange.com/questions/203371/run-script-sh-vs-bash-script-sh-permission-denied
 It's probably because the drive is mounted as noexec. May need to explicitly remount with `-o exec`. Use `mount` to confirm.
+
+
+# Generate sorted name/size list of a tarball:
+# https://stackoverflow.com/questions/1030545/how-to-compare-two-tarballs-content
+tar tvfj <tarball> | awk '{printf "%10s %s\n",$3,$6}' | sort -k 2
+
