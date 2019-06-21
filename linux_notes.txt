@@ -261,6 +261,8 @@ The setuid and setgid bits are normally set with the command chmod by setting th
 Remove executable bit recursively on all files, excepting directories, and only if the bit is set:
 http://superuser.com/questions/234647/how-to-remove-executable-bit-recursively-from-files-not-directories
 find . -type f -perm +111 -exec chmod -x {} \;
+If that doesn't work, try searching with:
+find . -type f -perm -g=w
 
 
 Bash 'strict mode' (i.e. #!/bin/bash or set -euo pipefail):
