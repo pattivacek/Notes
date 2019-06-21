@@ -171,3 +171,6 @@ cat <file.json> | jq -M -c --sort-keys . | tr -d '\n' | sha256sum
 # Use a proxy to access Jenkins on patrick-box when on the ATS VPN:
 `ssh -N -D 1234 bagger` and then `chromium --proxy-server=socks5://localhost:1234`
 
+
+# Dump contents of a p12 (requires jdk):
+keytool -list -v -keystore autoprov_credentials.p12 -storepass ""
