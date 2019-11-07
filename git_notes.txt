@@ -113,6 +113,12 @@ git rev-list --all | xargs git grep expression
 # If you want to limit the search to some subtree (for instance "lib/util") you can pass that to the rev-list subcommand:
 git grep <regexp> $(git rev-list --all -- lib/util)
 
+# Search for differences that change the number of occurrences of a string:
+git log -S <string>
+# Add --pickaxe-regex to search for a regex instead of a string.
+# Look for differences whose patch text contains added/removed lines that match a regex:
+git log -G <regex>
+
 
 # View commits in one branch but not in another:
 git log <branch> ^<excluded_branch> --no-merges
