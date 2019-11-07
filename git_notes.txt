@@ -244,3 +244,7 @@ git shortlog -sn
 # Open all files changed in HEAD (aliased to git cur):
 vim -p $(git show --name-only --pretty="format:")
 # Also works with diff for current changes (git prev).
+
+
+# Get/view/show a file from a specific revision:
+git show <treeish>:<file>
