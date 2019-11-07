@@ -241,5 +241,6 @@ git shortlog -sn
 # if strong focus is needed, open commit in full screen with O, go back to commit view with q
 
 
-# Open all files changed in HEAD:
+# Open all files changed in HEAD (aliased to git cur):
 vim -p $(git show --name-only --pretty="format:")
+# Also works with diff for current changes (git prev).
