@@ -248,3 +248,21 @@ vim -p $(git show --name-only --pretty="format:")
 
 # Get/view/show a file from a specific revision:
 git show <treeish>:<file>
+
+
+# Push a branch from one remote to another:
+# https://stackoverflow.com/a/7819233/289099
+git push <remote2> <remote1>/<branch>:refs/heads/<branch>
+
+
+# Show lines changed stats:
+# https://stackoverflow.com/questions/2528111/how-can-i-calculate-the-number-of-lines-changed-between-two-commits-in-git/2528129
+git diff --shortstat <commit-ish> <commit-ish>
+git diff --stat <commit-ish> <commit-ish>
+git log --stat <commit1>..<commit2>
+
+
+# List remote tags:
+git ls-remote --tags <remote>
+# Delete remote tag:
+git push --delete <remote> <branch>
