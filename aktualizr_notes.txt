@@ -50,10 +50,6 @@ garage-deploy -f <fetch-creds> -p <push-creds> --commit <hash> -h qemux86-64 --n
 tmp/work/x86_64-linux/aktualizr-native/1.0+gitAUTOINC+<hash>-7/build/src/sota_tools/garage-deploy --commit <commit> --name qemux86-64 -f ~/Documents/creds/<creds>.zip -p ~/Documents/creds/<creds>.zip -h qemux86-64 --cacert /etc/ssl/certs/ca-certificates.crt
 
 
-# The systemd service can also be disabled by default by adding the following to local.conf:
-SYSTEMD_AUTO_ENABLE_aktualizr = "disable"
-
-
 # Build .debs for release:
 ./scripts/run_docker_test.sh docker/Dockerfile.ubuntu.bionic -eTEST_INSTALL_DESTDIR=$PWD/temp -- ./scripts/build_ubuntu.sh
 
