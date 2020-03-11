@@ -53,6 +53,13 @@ Ctrl-X, O
 List breakpoints:
 i b
 
+Save breakpoints:
+https://stackoverflow.com/questions/501486/getting-gdb-to-save-a-list-of-breakpoints
+save breakpoints <filename>
+
+Load breakpoints:
+source <filename>
+
 
 Load symbol table from an executable file (sometimes necessary for remote debugging if the symbol table can't be found):
 symbol-file <file>
