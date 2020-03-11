@@ -88,7 +88,7 @@ deactivate
 python3 -m venv myenv
 
 
-# Set breakpoint in multithreaded environment:
+# Set breakpoint for debugging in multithreaded environment (such as with flask):
 # https://stackoverflow.com/questions/7617066/pdb-wont-stop-on-breakpoint
 # Add this to the code at the desired breakpoint:
 import pdb; pdb.set_trace()
