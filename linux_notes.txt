@@ -287,6 +287,9 @@ exiftool -all= -tagsfromfile @ -all:all -unsafe <file>
 Fix image metadata dates:
 exiftool "-AllDates=YYYY:MM:DD HH:MM:SS" <file>
 
+Reset video modified date to the create data (after running the above):
+exiftool "-FileModifyDate<QuickTime:CreateDate" <file>
+
 
 Generate a flac fingerprint file:
 metaflac --show-md5sum *.flac > fingerprints.ffp
@@ -320,6 +323,10 @@ rename 's/^old/new' <files>
 Reduce size/quality of a pdf:
 gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages -dCompressFonts=true -sOutputFile=output.pdf <input.pdf>
 Can also try other options for dPDFSETTINGS such as screen and default, or adding -r150 for pixel count, but those options are usually less ideal.
+
+Extract/remove pages from a pdf:
+https://askubuntu.com/questions/221962/how-can-i-extract-a-page-range-a-part-of-a-pdf
+pdftk input.pdf cat 1-10 12 output output.pdf
 
 
 Set terminal title:
@@ -383,7 +390,9 @@ VBoxManage controlvm <name|uuid> poweroff
 VBoxManage controlvm <name|uuid> acpipowerbutton
 
 
-Rotate, revoke, cross-sign, etc. gpg keys:
+# Create new key with separate signing and encryption subkeys:
+https://blog.tinned-software.net/create-gnupg-key-with-sub-keys-to-sign-encrypt-authenticate/
+# Rotate, revoke, cross-sign, etc. gpg keys:
 https://sungo.wtf/2016/11/23/gpg-strong-keys-rotation-and-keybase.html
 
 # Renew a gpg key:
