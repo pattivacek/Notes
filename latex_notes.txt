@@ -45,3 +45,8 @@ Use -- for en-dashes, used in ranges (pages 5--7).
 Use --- for em-dashes, used as punctuation between phrases ("A specter is haunting Europe---the specter of Communism.")
 Use math mode or $-5$ for a minus sign.
 
+% Tilde:
+% https://tex.stackexchange.com/questions/9363/how-does-one-insert-a-backslash-or-a-tilde-into-latex
+% Easiest comprise:
+$\sim$
+
