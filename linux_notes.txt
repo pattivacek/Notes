@@ -442,3 +442,16 @@ It's probably because the drive is mounted as noexec. May need to explicitly rem
 # https://stackoverflow.com/questions/1030545/how-to-compare-two-tarballs-content
 tar tvfj <tarball> | awk '{printf "%10s %s\n",$3,$6}' | sort -k 2
 
+
+# List installed packages sorted by their size:
+# https://askubuntu.com/questions/1577/moving-from-bash-to-zsh
+dpkg-query -W --showformat='${Installed-Size} ${Package} ${Status}\n' | grep -v deinstall | sort -n | awk '{print $1" "$2}'
+
+
+# Show resource usage graph of a process (ps with history):
+https://unix.stackexchange.com/questions/554/how-to-monitor-cpu-memory-usage-of-a-single-process
+psrecord $(pgrep proc-name1) --interval 1 --plot plot1.png
+
+
+# Constrain/limit resources availabile to a command:
+systemd-run --scope -p MemoryLimit=100M <command>
