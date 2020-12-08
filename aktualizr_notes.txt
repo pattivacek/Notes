@@ -9,12 +9,9 @@ ninja all build_tests format && CTEST_OUTPUT_ON_FAILURE=1 CTEST_PARALLEL_LEVEL=8
 sudo picocom -b 115200 /dev/ttyUSB0
 
 
-# Rebalance btrfs:
-sudo btrfs balance start -dusage=85 -musage=85 /
-
-
-# https://github.com/advancedtelematic/aktualizr#building-with-docker
 # Build with Docker:
+# https://github.com/advancedtelematic/aktualizr#building-with-docker
+# Old method:
 docker build -t advancedtelematic/aktualizr .
 
 # Run with Docker:
@@ -37,7 +34,7 @@ tmp/work/x86_64-linux/aktualizr-native/1.0+gitAUTOINC+<hash>-7/build/src/cert-pr
 
 
 # Find garage-push command:
-find . -iname 'run*ostreepush'
+find tmp/work -iname 'run*ostreepush'
 # Should be something like this:
 ./tmp/work/qemux86_64-poky-linux/core-image-minimal/1.0-r0/temp/run.do_image_ostreepush
 # Bitbake command to run only that command (although will most likely be cached):

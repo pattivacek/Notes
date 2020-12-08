@@ -225,7 +225,7 @@ vim .git/rebase-apply/0001
 git checkout master && git branch --merged | grep -v "\*" | xargs -n 1 git branch -d
 
 
-# List all developers on a project
+# List all authors/contributors/developers on a project
 # https://stackoverflow.com/questions/9597410/list-all-developers-on-a-project-in-git
 git shortlog --summary --numbered
 # or simply:
