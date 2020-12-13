@@ -328,6 +328,10 @@ Extract/remove pages from a pdf:
 https://askubuntu.com/questions/221962/how-can-i-extract-a-page-range-a-part-of-a-pdf
 pdftk input.pdf cat 1-10 12 output output.pdf
 
+Extract images from a pdf:
+https://askubuntu.com/questions/150100/extracting-embedded-images-from-a-pdf
+pdfimages -all <input-pdf> <output-dir>
+
 
 Set terminal title:
 https://askubuntu.com/questions/22413/how-to-change-gnome-terminal-title
@@ -455,3 +459,15 @@ psrecord $(pgrep proc-name1) --interval 1 --plot plot1.png
 
 # Constrain/limit resources availabile to a command:
 systemd-run --scope -p MemoryLimit=100M <command>
+
+
+# Select fastest apt mirror for sources.list:
+# https://askubuntu.com/a/9035/173694
+
+
+# Prevent a program adding itself to startup programs automatically:
+# https://askubuntu.com/questions/541272/prevent-a-program-adding-itself-to-startup-programs-automatically
+vim ~/.config/autostart/dropbox.desktop. Then change Exec=dropbox start -i to Exec=
+chmod 600 ~/.config/autostart/dropbox.desktop. This makes the file only accessible by its user.
+sudo chown root:root ~/.config/autostart/dropbox.desktop. This changes the user of the file to root.
+
