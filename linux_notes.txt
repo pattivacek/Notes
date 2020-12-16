@@ -471,3 +471,6 @@ vim ~/.config/autostart/dropbox.desktop. Then change Exec=dropbox start -i to Ex
 chmod 600 ~/.config/autostart/dropbox.desktop. This makes the file only accessible by its user.
 sudo chown root:root ~/.config/autostart/dropbox.desktop. This changes the user of the file to root.
 
+
+# Measure CPU cycles of a command (and more detail than time):
+perf stat <command>
