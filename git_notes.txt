@@ -6,28 +6,9 @@ http://cheat.errtheblog.com/s/git
 PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
 
 
-# Show remote origin URL:
-git remote show origin
-
-
 # Undo all working dir changes including new files:
 git reset --hard
 git clean -f -x -d (this is dangerous and will delete all untracked files and directories!)
-
-
-# Commit only part of a file (git commit -p works too):
-git add -p <filename>
-    * y - stage this hunk
-    * n - do not stage this hunk
-    * d - do not stage this hunk or any of the later hunks in the file
-    * s - split the current hunk into smaller hunks
-    * e - manually edit the current hunk
-    * ? - print help
-git commit
-
-
-# Show the changes in the cache/index (i.e. staged changes) against the current HEAD. --staged is a synonym for --cached.
-git diff --cached
 
 
 # Split older commits:
