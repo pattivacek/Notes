@@ -113,7 +113,7 @@ git push origin :<branchName>
 # Add a repo to another (as a subtree, including history):
 git remote add <other_repo_nickname> <other_repo_url>
 git fetch <other_repo_nickname>
-git merge -s ours --no-commit <other_repo_nickname>/master
+git merge -s ours --allow-unrelated-histories --no-commit <other_repo_nickname>/master
 git read-tree --prefix=<new_subdirectory>/ -u <other_repo_nickname>/master
 git commit
 # You can track upstream changes like so:
