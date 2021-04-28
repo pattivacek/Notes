@@ -439,7 +439,7 @@ export XDG_RUNTIME_DIR=/run/user/$UID
 
 # Permission denied despite 777:
 https://unix.stackexchange.com/questions/203371/run-script-sh-vs-bash-script-sh-permission-denied
-It's probably because the drive is mounted as noexec. May need to explicitly remount with `-o exec`. Use `mount` to confirm.
+It's probably because the drive is mounted as noexec. May need to explicitly remount with `-o exec`. Make sure `-o user` is not included. Use `mount` to confirm.
 
 
 # Generate sorted name/size list of a tarball:
@@ -474,3 +474,8 @@ sudo chown root:root ~/.config/autostart/dropbox.desktop. This changes the user 
 
 # Measure CPU cycles of a command (and more detail than time):
 perf stat <command>
+
+
+# Debug a failed dockerfile command:
+# https://stackoverflow.com/questions/26220957/how-can-i-inspect-the-file-system-of-a-failed-docker-build
+docker run --rm -it <id_last_working_layer> bash -il
