@@ -478,3 +478,8 @@ perf stat <command>
 # Debug a failed dockerfile command:
 # https://stackoverflow.com/questions/26220957/how-can-i-inspect-the-file-system-of-a-failed-docker-build
 docker run --rm -it <id_last_working_layer> bash -il
+
+
+# Setup alternatives for multiple gcc/g++ versions:
+# https://askubuntu.com/questions/26498/how-to-choose-the-default-gcc-and-g-version
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 10
