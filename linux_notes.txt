@@ -493,3 +493,13 @@ docker run --rm -it <id_last_working_layer> bash -il
 # Setup alternatives for multiple gcc/g++ versions:
 # https://askubuntu.com/questions/26498/how-to-choose-the-default-gcc-and-g-version
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 10
+
+
+# List all enabled systemd services:
+systemctl list-unit-files --state=enabled
+
+
+# Prioritize network interfaces:
+route -n  # list interfaces
+sudo ifmetric usb0 2000  # set metric
+systemctl restart NetworkManager  # if necessary
