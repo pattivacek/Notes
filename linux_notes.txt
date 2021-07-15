@@ -312,14 +312,17 @@ vlc dvd:///dev/sr0#1:34 --sout "#standard{access=file,mux=ts,dst=dvdout.mpg}" vl
 Add --run-time=1.75 --stop-time=1.75 to control how long it streams (in real time) in seconds. This can be difficult to get just right.
 
 
-Find all the files a package installed onto your system:
-https://askubuntu.com/questions/32507/how-do-i-get-a-list-of-installed-files-from-a-package/
+# Find all the files a package installed onto your system:
+# https://askubuntu.com/questions/32507/how-do-i-get-a-list-of-installed-files-from-a-package/
 dpkg-query -L <package_name>
-Find the files a .deb file will install:
+# Find the files a .deb file will install:
 dpkg-deb -c <package_name.deb>
+# Find package that provides a given file:
+# https://askubuntu.com/questions/481/how-do-i-find-the-package-that-provides-a-file
+dpkg -S <file>
 
 
-List all the files inside an rpm package:
+# List all the files inside an rpm package:
 rpm -qlp <file.rpm>
 
 
