@@ -220,9 +220,13 @@ Host <alias>
   IdentityFile ~/.ssh/id_rsa (or such; optional)
 
 
-Check progress of a dd:
+# Check progress of a dd:
+dd if=/dev/sdb of=/image.img status=progress
+# Older method:
 dd if=/dev/sdb of=/image.img &
 kill -SIGUSR1 %1 [or PID]
+# Or try:
+sudo pkill -usr1 dd
 
 
 Make a RedHat filesystem read-only:
