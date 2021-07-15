@@ -1,15 +1,18 @@
-CPU/OS info:
+# CPU/OS info:
 uname -a
 cat /proc/cpuinfo
 cat /etc/*-release
 
 
-CPU statistics:
+# CPU statistics:
 top <enter> 1 fj <enter> H
+# Only list processes matching a given string:
+# https://unix.stackexchange.com/questions/165214/how-to-view-a-specific-process-in-top
+top -p `pgrep -d "," java`
 
 
-/proc/sys/kernel/ documentation:
-https://www.kernel.org/doc/Documentation/sysctl/kernel.txt
+# /proc/sys/kernel/ documentation:
+# https://www.kernel.org/doc/Documentation/sysctl/kernel.txt
 
 
 Profiling:
