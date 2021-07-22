@@ -434,7 +434,10 @@ command > logfile 2>&1
 
 
 # Generate XKCD-style memorable passwords:
-shuf -n5 /usr/share/dict/words | tr '\n' ' ' && echo
+# https://superuser.com/questions/237228/command-line-tool-to-generate-memorable-passwords
+# https://unix.stackexchange.com/questions/470288/one-liner-to-generate-an-easily-memorable-password
+diceware
+WORDS=5; LC_ALL=C grep -x '[a-z]*' /usr/share/dict/words | shuf --random-source=/dev/urandom -n ${WORDS} | paste -sd "-"
 
 
 # `systemctl --user status` fails with "Failed to connect to bus: No such file or directory":
