@@ -66,3 +66,6 @@ ostree --repo=<repo-path> ls <commit-hash> -RC
 cat tmp/deploy/images/qemux86-64/ostree_repo/refs/heads/qemux86-64
 
 
+# Mount a wic file:
+# https://community.nxp.com/t5/i-MX-Processors-Knowledge-Base/Yocto-Project-reading-partitons-in-the-sdcard-image-from-a-Linux/ta-p/1129002
+sudo mount -o loop,offset=$((512 * 8192)) core-image-base-imx6sxsabresd.wic /mnt/mp1
