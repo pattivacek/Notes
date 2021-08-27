@@ -211,6 +211,8 @@ vim .git/rebase-apply/0001
 # Delete all merged branches:
 # https://stackoverflow.com/questions/6127328/how-can-i-delete-all-git-branches-which-have-been-merged
 git branch --merged | grep -v "\*" | grep -vw master | grep -vw main | xargs -n 1 git branch -d
+# Now aliased to this:
+git delete-merged
 
 
 # List all authors/contributors/developers on a project
