@@ -428,7 +428,7 @@ gpg> expire
 gpg> save
 
 # Send a gpg key to several keyservers:
-for ks in keys.gnupg.net pool.sks-keyservers.net keyserver.ubuntu.com pgp.mit.edu; do gpg --keyserver $ks --send-key <keyid>; done
+for ks in hkps://keys.openpgp.org hkps://keyserver.ubuntu.com hkps://pgp.mit.edu/; do gpg --keyserver $ks --send-key <keyid>; done
 
 
 # Unicode characters and their compose key combinations:
