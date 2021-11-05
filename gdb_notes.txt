@@ -87,3 +87,7 @@ restart checkpoint-id - Restore the program state that was saved as checkpoint n
 Print full string:
 https://stackoverflow.com/questions/233328/how-do-i-print-the-full-value-of-a-long-string-in-gdb
 set print elements 0
+
+
+# Catch exceptions when thrown:
+catch throw
