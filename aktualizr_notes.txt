@@ -1,5 +1,6 @@
 # Standard cmake line:
-cmake ../ -GNinja -DCMAKE_BUILD_TYPE=Debug -DBUILD_SOTA_TOOLS=ON -DBUILD_OSTREE=ON -DFAULT_INJECTION=ON -DSOTA_PACKED_CREDENTIALS=/home/patti/Documents/creds/prod_here_cred.zip -DCMAKE_C_FLAGS=-fdiagnostics-color=always -DCMAKE_CXX_FLAGS=-fdiagnostics-color=always
+cmake ../ -GNinja -DCMAKE_BUILD_TYPE=Debug -DBUILD_SOTA_TOOLS=ON -DBUILD_OSTREE=ON -DFAULT_INJECTION=ON -DSOTA_PACKED_CREDENTIALS=/home/patti/Downloads/here-ota-patti-test.zip \
+  -DCMAKE_C_FLAGS=-fdiagnostics-color=always -DCMAKE_CXX_FLAGS=-fdiagnostics-color=always
 
 # Standard ninja build and test command:
 ninja all build_tests format && CTEST_OUTPUT_ON_FAILURE=1 CTEST_PARALLEL_LEVEL=8 ctest
@@ -44,7 +45,8 @@ bitbake -c do_image_ostreepush core-image-minimal
 # Basic garage-deploy usage (get commit hash with above command):
 garage-deploy -f <fetch-creds> -p <push-creds> --commit <hash> -h qemux86-64 --name qemux86-64 --cacert tmp/sysroots-components/x86_64/ca-certificates-native/etc/ssl/certs/ca-certificates.crt
 # From bitbake build dir:
-tmp/work/x86_64-linux/aktualizr-native/1.0+gitAUTOINC+<hash>-7/build/src/sota_tools/garage-deploy --commit <commit> --name qemux86-64 -f ~/Documents/creds/<creds>.zip -p ~/Documents/creds/<creds>.zip -h qemux86-64 --cacert /etc/ssl/certs/ca-certificates.crt
+tmp/work/x86_64-linux/aktualizr-native/1.0+gitAUTOINC+<hash>-7/build/src/sota_tools/garage-deploy --commit <commit> --name qemux86-64 \
+  -f ~/Documents/creds/<creds>.zip -p ~/Documents/creds/<creds>.zip -h qemux86-64 --cacert /etc/ssl/certs/ca-certificates.crt
 
 
 # Build .debs for release:
@@ -64,8 +66,22 @@ ostree --repo=<repo-path> ls <commit-hash> -RC
 
 # Find latest OSTree repo ref:
 cat tmp/deploy/images/qemux86-64/ostree_repo/refs/heads/qemux86-64
+cat build/tmp-glibc/deploy/images/imx6ulmdb/ostree_repo/refs/heads/imx6ulmdb
 
 
 # Mount a wic file:
 # https://community.nxp.com/t5/i-MX-Processors-Knowledge-Base/Yocto-Project-reading-partitons-in-the-sdcard-image-from-a-Linux/ta-p/1129002
 sudo mount -o loop,offset=$((512 * 8192)) core-image-base-imx6sxsabresd.wic /mnt/mp1
+
+
+# Run aktualizr tests in CI docker:
+export DOCKER_TAG=docker.pkg.github.com/uptane/aktualizr/aktualizr-ci:bionic-master
+docker run -v "$PWD:$PWD" -w "$PWD" -eTEST_CMAKE_BUILD_TYPE=Valgrind -eTEST_WITH_COVERAGE=1 -eTEST_WITH_P11=1 -eTEST_WITH_FAULT_INJECTION=1 \
+  -eTEST_TESTSUITE_EXCLUDE=credentials -eTEST_SOTA_PACKED_CREDENTIALS=dummy-credentials -it "$DOCKER_TAG" ./scripts/test.sh
+
+# Open another terminal in a docker container:
+docker exec -it <name-or-id> bash
+
+
+# OSTree commit/deployment pinning to prevent pruning/garbage collection:
+# https://dustymabe.com/2018/05/22/pinning-deployments-in-ostree-based-systems/
