@@ -518,3 +518,8 @@ systemctl restart NetworkManager  # if necessary
 # Uninstall a project build with cmake:
 # https://stackoverflow.com/a/44649542/289099
 xargs rm < install_manifest.txt
+
+
+# Exit/escape/disconnect from hanging SSH session:
+# https://superuser.com/questions/467398/how-do-i-exit-an-ssh-connection
+<Enter>~.
