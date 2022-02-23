@@ -115,8 +115,11 @@ Use gctags recursively on machines that use -R for deactivating regex instead of
 find . -type f | xargs gctags
 
 
-Delete empty folders:
+# Delete empty folders:
 find <path> -empty -type d -delete
+
+# Find folders that aren't empty but don't contain music files:
+find Library/ Share/ Share_More/ -mindepth 2 -type d '!' -exec sh -c 'ls -1 "{}"|egrep -i -q ".*(flac|mp3|m4a|mp4)$"' ';' -print
 
 
 Check which man sections are available:
