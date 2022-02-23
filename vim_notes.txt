@@ -349,8 +349,11 @@ Ctrl-w -/+: Decrease/increase vertical size of current window
 Ctrl-w </>: Decrease/increase horizontal size of current window
 
 
-Ignore whitespace while diffing:
+# Ignore whitespace while diffing:
 set diffopt+=iwhite
+
+# Ignore case/capitalization:
+set diffopt+=icase
 
 
 Open tagged definition in a new tab:
