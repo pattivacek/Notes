@@ -1,0 +1,20 @@
+# Display/print a JavaScript object:
+# https://stackoverflow.com/questions/957537/how-can-i-display-a-javascript-object
+console.log(JSON.stringify(obj, null, 4))
+
+
+# Check if an object is empty:
+# https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
+Object.keys(obj).length === 0;
+# Or use lodash:
+_.isEmpty(obj)
+
+
+# Copy array by value:
+# https://stackoverflow.com/questions/7486085/copy-array-by-value
+let newArray = oldArray.slice();
+
+
+# Sort array of objects by date key:
+# https://stackoverflow.com/questions/8837454/sort-array-of-objects-by-single-key-with-date-value
+arr.sort((a,b) => new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime());
