@@ -530,3 +530,13 @@ xargs rm < install_manifest.txt
 # Exit/escape/disconnect from hanging SSH session:
 # https://superuser.com/questions/467398/how-do-i-exit-an-ssh-connection
 <Enter>~.
+
+
+# Print only duplicated lines:
+# https://stackoverflow.com/questions/12743800/how-to-catch-duplicate-entries-in-text-file-in-linux
+sort file.txt | uniq -d
+
+
+# Make xargs handle spaces correctly:
+# https://stackoverflow.com/questions/16758525/make-xargs-handle-filenames-that-contain-spaces
+ls *.mp3 | xargs -d '\n' mplayer
