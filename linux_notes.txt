@@ -94,12 +94,17 @@ sudo dpkg --configure -a
 sudo apt-get update
 
 
-Unload a driver:
+# Unload a driver:
 rmmod <driver>
-Determine driver dependencies:
-depmod -aq
-Load a driver (after proper installation):
+# Load a driver (after proper installation):
 modprobe <driver>
+# List loaded kernel modules:
+lsmod
+# List loadable/installed/inactive kernel modules:
+# https://unix.stackexchange.com/questions/184877/how-to-list-all-loadable-kernel-modules
+find /lib/modules/$(uname -r) -type f -name '*.ko*'
+# With dependencies:
+depmod -v
 
 
 SSH to multiple ports on the same host without warnings:
@@ -284,7 +289,7 @@ Bash 'strict mode' (i.e. #!/bin/bash or set -euo pipefail):
 http://redsymbol.net/articles/unofficial-bash-strict-mode/
 
 
-Find largest files:
+# Find largest files (this doesn't seem to work!):
 find . -xdev -type f -exec du -sh {} ';' | sort -rn | head -n50
 
 
@@ -445,6 +450,8 @@ for ks in hkps://keys.openpgp.org hkps://keyserver.ubuntu.com hkps://pgp.mit.edu
 # Redirect stdout and stderr (use >> for append):
 command &> logfile
 command > logfile 2>&1
+# With tee, make sure you put the redirection before the pipe:
+command 2>&1 | tee dump.txt
 
 
 # Generate XKCD-style memorable passwords:
@@ -480,7 +487,9 @@ dpkg-query -W --showformat='${Installed-Size} ${Package} ${Status}\n' | grep -v 
 
 # Show resource usage graph of a process (ps with history):
 https://unix.stackexchange.com/questions/554/how-to-monitor-cpu-memory-usage-of-a-single-process
+pip3 install psrecord
 psrecord $(pgrep proc-name1) --interval 1 --plot plot1.png
+# Kill the process to output the plot (?)
 
 
 # Constrain/limit resources availabile to a command:
@@ -502,9 +511,17 @@ sudo chown root:root ~/.config/autostart/dropbox.desktop. This changes the user 
 perf stat <command>
 
 
+# List all tags for a Docker image on a remote registry:
+# https://stackoverflow.com/questions/28320134/how-can-i-list-all-tags-for-a-docker-image-on-a-remote-registry
+wget -q https://registry.hub.docker.com/v1/repositories/debian/tags -O - | sed -e 's/[][]//g' -e 's/"//g' -e 's/ //g' | tr '}' '\n' | awk -F: '{print $3}'
+
 # Debug a failed dockerfile command:
 # https://stackoverflow.com/questions/26220957/how-can-i-inspect-the-file-system-of-a-failed-docker-build
 docker run --rm -it <id_last_working_layer> bash -il
+
+# SSH into a Container
+# https://phase2.github.io/devtools/common-tasks/ssh-into-a-container/
+docker exec -it <container name> <command>
 
 
 # Setup alternatives for multiple gcc/g++ versions:
@@ -540,3 +557,32 @@ sort file.txt | uniq -d
 # Make xargs handle spaces correctly:
 # https://stackoverflow.com/questions/16758525/make-xargs-handle-filenames-that-contain-spaces
 ls *.mp3 | xargs -d '\n' mplayer
+
+
+# Enable kernel debug logging:
+# https://stackoverflow.com/questions/50504516/enable-linux-kernel-driver-dev-dbg-debug-messages
+# Make sure that your kernel is complied with CONFIG_DYNAMIC_DEBUG=y, confirm with:
+cat /proc/config.gz | gunzip | grep CONFIG_DYNAMIC_DEBUG
+# After boot up check that debugfs is mounted:
+mount | grep debugfs
+# Enable the file name for which you need dev_dbg() logs:
+echo 'file <driverfilename.c> +p'>/sys/kernel/debug/dynamic_debug/control
+# See kernel documentation for more information on usage:
+https://www.kernel.org/doc/html/v4.15/admin-guide/dynamic-debug-howto.html
+
+
+# List all groups:
+# https://stackoverflow.com/a/21998187/289099
+getent group | cut -d: -f1 | sort
+
+
+# Print/display contents of a certificate:
+openssl x509 -in example.pem -text
+
+
+# List open ports:
+sudo apt install lsof
+sudo lsof -i -P -n | grep LISTEN
+# or:
+sudo apt install net-tools
+sudo netstat -tulpn | grep LISTEN
