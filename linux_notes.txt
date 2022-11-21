@@ -350,6 +350,10 @@ Extract images from a pdf:
 https://askubuntu.com/questions/150100/extracting-embedded-images-from-a-pdf
 pdfimages -all <input-pdf> <output-dir>
 
+Convert images to pdf:
+https://stackoverflow.com/a/8955457/289099
+img2pdf img1.png img2.jpg -o out.pdf
+
 
 Set terminal title:
 https://askubuntu.com/questions/22413/how-to-change-gnome-terminal-title
