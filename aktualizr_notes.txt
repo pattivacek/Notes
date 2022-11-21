@@ -85,3 +85,7 @@ docker exec -it <name-or-id> bash
 
 # OSTree commit/deployment pinning to prevent pruning/garbage collection:
 # https://dustymabe.com/2018/05/22/pinning-deployments-in-ostree-based-systems/
+
+
+# Get OSTree HTTP logging:
+# Set OSTREE_DEBUG_HTTP=1 env variable for the process
