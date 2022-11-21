@@ -60,7 +60,7 @@ git rebase --onto tmp A^ br
 
 # Change author of historical commits:
 # https://stackoverflow.com/questions/16217801/git-rebase-change-author
-git rebase --root --exec 'git commit --amend --author="your-name <your-email>" --no-edit'
+GIT_COMMITTER_NAME="your-name" GIT_COMMITTER_EMAIL="your-email" git rebase --root --exec 'git commit --amend --author="your-name <your-email>" --no-edit'
 
 
 # If you want to see moves in git diff you can supply -M in addition to an option that lists which files have changed, e.g.
