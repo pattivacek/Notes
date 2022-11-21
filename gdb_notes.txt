@@ -1,17 +1,21 @@
-Show backtrace of all threads:
+# Show backtrace of all threads:
 thread apply all backtrace (thr ap al bt)
 
 
-Attach to running program:
+# Attach to running program (-p is enough):
+# https://stackoverflow.com/questions/2308653/can-i-use-gdb-to-debug-a-running-process
 gdb --pid=`pgrep <program>`
+# Or use `attach` on the gdb prompt.
 
 
-Attach to core dump:
+# Attach to core dump:
 gdb <program> <dump_dir>/`ls -t <dump_dir>/ | head -n 1`
 
 
-Prevent gdb from jumping threads:
+# Prevent gdb from jumping threads:
 handle SIGPIPE nostop noprint pass
+# Pass interrupt to application:
+handle SIGINT pass
 
 
 Step instruction:
@@ -91,3 +95,10 @@ set print elements 0
 
 # Catch exceptions when thrown:
 catch throw
+
+
+# Skip a line of execution (and continue debugging after the jump):
+# https://stackoverflow.com/questions/4037308/can-i-use-gdb-to-skip-a-line-without-having-to-type-line-numbers
+tbreak +1
+jump +1
+
