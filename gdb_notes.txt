@@ -6,6 +6,7 @@ thread apply all backtrace (thr ap al bt)
 # https://stackoverflow.com/questions/2308653/can-i-use-gdb-to-debug-a-running-process
 gdb --pid=`pgrep <program>`
 # Or use `attach` on the gdb prompt.
+# Due to increased security, you will either need to run as root or edit /proc/sys/kernel/yama/ptrace_scope
 
 
 # Attach to core dump:
