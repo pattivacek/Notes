@@ -432,3 +432,6 @@ Move to next bad word:
 Find suggestions for a bad word:
 z=
 
+
+Non-greedy regex search (stop at first match found):
+Instead of .* use .\{-}.
