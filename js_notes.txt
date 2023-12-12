@@ -18,3 +18,22 @@ let newArray = oldArray.slice();
 # Sort array of objects by date key:
 # https://stackoverflow.com/questions/8837454/sort-array-of-objects-by-single-key-with-date-value
 arr.sort((a,b) => new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime());
+
+
+# Get type of an object:
+# https://stackoverflow.com/questions/7390426/better-way-to-get-type-of-a-javascript-variable
+function typeOf(obj) {
+  return {}.toString.call(obj).split(' ')[1].slice(0, -1).toLowerCase();
+}
+
+
+# Use lodash in the nodejs REPL:
+# https://github.com/jsforce/jsforce/issues/470
+var l_ = require('lodash');
+
+
+# Check for presence of a key/field in an object:
+# https://stackoverflow.com/questions/35948669/how-to-check-if-a-value-exists-in-an-object-using-javascript
+let exists = Object.keys(obj).includes("test1")
+# For an array:
+let exists = array.includes("test1")
