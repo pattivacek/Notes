@@ -334,6 +334,8 @@ dpkg-deb -c <package_name.deb>
 # https://askubuntu.com/questions/481/how-do-i-find-the-package-that-provides-a-file
 dpkg -S <file>
 
+# List all the file inside a Debian package:
+apt-file list <package>
 
 # List all the files inside an rpm package:
 rpm -qlp <file.rpm>
